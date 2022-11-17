@@ -10,12 +10,12 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var habitsViewController = HabitsViewController()
+    var tabBarController = TabBarController()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
-        self.window?.rootViewController = habitsViewController
+        self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
 
     }

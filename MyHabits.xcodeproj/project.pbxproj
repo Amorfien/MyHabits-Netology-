@@ -14,6 +14,8 @@
 		189F10032926955100739CF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 189F10022926955100739CF2 /* Assets.xcassets */; };
 		189F10062926955100739CF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189F10042926955100739CF2 /* LaunchScreen.storyboard */; };
 		189F100E2926970A00739CF2 /* HabitsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F100D2926970A00739CF2 /* HabitsStore.swift */; };
+		189F10102926A34C00739CF2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F100F2926A34C00739CF2 /* TabBarController.swift */; };
+		189F10122926A40000739CF2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F10112926A40000739CF2 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		189F10052926955100739CF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		189F10072926955100739CF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		189F100D2926970A00739CF2 /* HabitsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
+		189F100F2926A34C00739CF2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		189F10112926A40000739CF2 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +62,15 @@
 		189F0FF52926955100739CF2 /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
+				189F100F2926A34C00739CF2 /* TabBarController.swift */,
+				189F0FFA2926955100739CF2 /* HabitsViewController.swift */,
+				189F10112926A40000739CF2 /* InfoViewController.swift */,
 				189F0FF62926955100739CF2 /* AppDelegate.swift */,
 				189F0FF82926955100739CF2 /* SceneDelegate.swift */,
-				189F100D2926970A00739CF2 /* HabitsStore.swift */,
-				189F0FFA2926955100739CF2 /* HabitsViewController.swift */,
 				189F10022926955100739CF2 /* Assets.xcassets */,
 				189F10042926955100739CF2 /* LaunchScreen.storyboard */,
 				189F10072926955100739CF2 /* Info.plist */,
+				189F100D2926970A00739CF2 /* HabitsStore.swift */,
 				189F0FFF2926955100739CF2 /* MyHabits.xcdatamodeld */,
 			);
 			path = MyHabits;
@@ -143,6 +149,8 @@
 				189F0FFB2926955100739CF2 /* HabitsViewController.swift in Sources */,
 				189F0FF72926955100739CF2 /* AppDelegate.swift in Sources */,
 				189F10012926955100739CF2 /* MyHabits.xcdatamodeld in Sources */,
+				189F10122926A40000739CF2 /* InfoViewController.swift in Sources */,
+				189F10102926A34C00739CF2 /* TabBarController.swift in Sources */,
 				189F100E2926970A00739CF2 /* HabitsStore.swift in Sources */,
 				189F0FF92926955100739CF2 /* SceneDelegate.swift in Sources */,
 			);
