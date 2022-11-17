@@ -9,8 +9,8 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
-    private let whiteView: UIView = {
-        let view = UIView()
+    private lazy var whiteView: UIScrollView = {
+        let view = UIScrollView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -54,28 +54,28 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 242/257, green: 242/257, blue: 247/257, alpha: 1)
-        navigationController?.isToolbarHidden = false
         navigationItem.title = "Информация"
+        whiteView.contentSize.width = 400
         setupUI()
     }
 
     private func setupUI() {
         view.addSubview(whiteView)
-        view.addSubview(titleLabel)
-        view.addSubview(infoText)
+        whiteView.addSubview(titleLabel)
+        whiteView.addSubview(infoText)
 
         NSLayoutConstraint.activate([
             whiteView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             whiteView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            whiteView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            whiteView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            whiteView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            whiteView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: whiteView.topAnchor, constant: 22),
+            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 
             infoText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             infoText.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            infoText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            infoText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             infoText.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor)
         ])
     }
