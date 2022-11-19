@@ -49,6 +49,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1871139929290EC900088A1D /* FirstTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				189F0FFA2926955100739CF2 /* HabitsViewController.swift */,
+				18E45FF129280FDF001FE4F3 /* HabitsCollectionViewCell.swift */,
+				1870BB272927A404004C509A /* HabitViewController.swift */,
+				1870BB292927CC2D004C509A /* PickerFill.swift */,
+			);
+			path = FirstTabBar;
+			sourceTree = "<group>";
+		};
+		1871139A29290EDE00088A1D /* SecondTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				189F10112926A40000739CF2 /* InfoViewController.swift */,
+			);
+			path = SecondTabBar;
+			sourceTree = "<group>";
+		};
+		1871139B29290F0500088A1D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				189F0FF62926955100739CF2 /* AppDelegate.swift */,
+				189F0FF82926955100739CF2 /* SceneDelegate.swift */,
+				189F10072926955100739CF2 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		189F0FEA2926955100739CF2 = {
 			isa = PBXGroup;
 			children = (
@@ -68,17 +97,12 @@
 		189F0FF52926955100739CF2 /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
+				1871139B29290F0500088A1D /* App */,
 				189F100F2926A34C00739CF2 /* TabBarController.swift */,
-				189F0FFA2926955100739CF2 /* HabitsViewController.swift */,
-				18E45FF129280FDF001FE4F3 /* HabitsCollectionViewCell.swift */,
-				1870BB272927A404004C509A /* HabitViewController.swift */,
-				189F10112926A40000739CF2 /* InfoViewController.swift */,
-				189F0FF62926955100739CF2 /* AppDelegate.swift */,
-				189F0FF82926955100739CF2 /* SceneDelegate.swift */,
-				1870BB292927CC2D004C509A /* PickerFill.swift */,
+				1871139929290EC900088A1D /* FirstTabBar */,
+				1871139A29290EDE00088A1D /* SecondTabBar */,
 				189F10022926955100739CF2 /* Assets.xcassets */,
 				189F10042926955100739CF2 /* LaunchScreen.storyboard */,
-				189F10072926955100739CF2 /* Info.plist */,
 				189F100D2926970A00739CF2 /* HabitsStore.swift */,
 				189F0FFF2926955100739CF2 /* MyHabits.xcdatamodeld */,
 			);
@@ -305,7 +329,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4V4XBFRF5Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyHabits/Info.plist;
+				INFOPLIST_FILE = MyHabits/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -335,7 +359,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4V4XBFRF5Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyHabits/Info.plist;
+				INFOPLIST_FILE = MyHabits/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
