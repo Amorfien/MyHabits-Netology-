@@ -46,6 +46,8 @@ class InfoViewController: UIViewController {
 5. Держать планку 40 дней. Практикующий методику уже чувствует себя освободившимся от прошлого негатива и двигается в нужном направлении с хорошей динамикой.
 
 6. На 90-й день соблюдения техники все лишнее из «прошлой жизни» перестает напоминать о себе, и человек, оглянувшись назад, осознает себя полностью обновившимся.
+
+Источник: psychbook.ru
 """
         info.translatesAutoresizingMaskIntoConstraints = false
         return info
@@ -55,7 +57,7 @@ class InfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 242/257, green: 242/257, blue: 247/257, alpha: 1)
         navigationItem.title = "Информация"
-        whiteView.contentSize.width = 400
+        whiteView.contentSize.width = UIScreen.main.bounds.width
         setupUI()
     }
 

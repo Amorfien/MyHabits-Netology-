@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         let infoViewController = UINavigationController(rootViewController: InfoViewController())
 
         self.viewControllers = [habitsViewController, infoViewController]
-        let item1 = UITabBarItem(title: "Привычки", image: UIImage(named: "Shape"), tag: 0)
+        let item1 = UITabBarItem(title: "Привычки", image: UIImage(systemName: "rectangle.grid.1x2.fill"), tag: 0)
         let item2 = UITabBarItem(title: "Информация", image:  UIImage(systemName: "info.circle.fill"), tag: 1)
         habitsViewController.tabBarItem = item1
         infoViewController.tabBarItem = item2
