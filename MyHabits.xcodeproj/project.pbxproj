@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1870BB282927A404004C509A /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1870BB272927A404004C509A /* HabitViewController.swift */; };
-		1870BB2A2927CC2D004C509A /* PickerFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1870BB292927CC2D004C509A /* PickerFill.swift */; };
-		1871139D2929150200088A1D /* HabitsFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871139C2929150200088A1D /* HabitsFirstCell.swift */; };
+		1871139D2929150200088A1D /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871139C2929150200088A1D /* ProgressCollectionViewCell.swift */; };
+		1871139F29293B9900088A1D /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1871139E29293B9900088A1D /* HabitDetailsViewController.swift */; };
 		189F0FF72926955100739CF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F0FF62926955100739CF2 /* AppDelegate.swift */; };
 		189F0FF92926955100739CF2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F0FF82926955100739CF2 /* SceneDelegate.swift */; };
 		189F0FFB2926955100739CF2 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F0FFA2926955100739CF2 /* HabitsViewController.swift */; };
@@ -24,8 +24,8 @@
 
 /* Begin PBXFileReference section */
 		1870BB272927A404004C509A /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
-		1870BB292927CC2D004C509A /* PickerFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerFill.swift; sourceTree = "<group>"; };
-		1871139C2929150200088A1D /* HabitsFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsFirstCell.swift; sourceTree = "<group>"; };
+		1871139C2929150200088A1D /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
+		1871139E29293B9900088A1D /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		189F0FF32926955100739CF2 /* MyHabits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		189F0FF62926955100739CF2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		189F0FF82926955100739CF2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,10 +55,10 @@
 			isa = PBXGroup;
 			children = (
 				189F0FFA2926955100739CF2 /* HabitsViewController.swift */,
-				1871139C2929150200088A1D /* HabitsFirstCell.swift */,
+				1871139C2929150200088A1D /* ProgressCollectionViewCell.swift */,
 				18E45FF129280FDF001FE4F3 /* HabitsCollectionViewCell.swift */,
 				1870BB272927A404004C509A /* HabitViewController.swift */,
-				1870BB292927CC2D004C509A /* PickerFill.swift */,
+				1871139E29293B9900088A1D /* HabitDetailsViewController.swift */,
 			);
 			path = FirstTabBar;
 			sourceTree = "<group>";
@@ -186,11 +186,11 @@
 				189F0FF72926955100739CF2 /* AppDelegate.swift in Sources */,
 				189F10012926955100739CF2 /* MyHabits.xcdatamodeld in Sources */,
 				1870BB282927A404004C509A /* HabitViewController.swift in Sources */,
+				1871139F29293B9900088A1D /* HabitDetailsViewController.swift in Sources */,
 				189F10122926A40000739CF2 /* InfoViewController.swift in Sources */,
-				1870BB2A2927CC2D004C509A /* PickerFill.swift in Sources */,
 				189F10102926A34C00739CF2 /* TabBarController.swift in Sources */,
 				189F100E2926970A00739CF2 /* HabitsStore.swift in Sources */,
-				1871139D2929150200088A1D /* HabitsFirstCell.swift in Sources */,
+				1871139D2929150200088A1D /* ProgressCollectionViewCell.swift in Sources */,
 				189F0FF92926955100739CF2 /* SceneDelegate.swift in Sources */,
 				18E45FF229280FDF001FE4F3 /* HabitsCollectionViewCell.swift in Sources */,
 			);

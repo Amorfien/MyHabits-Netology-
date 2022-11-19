@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitsFirstCell: UICollectionViewCell {
+class ProgressCollectionViewCell: UICollectionViewCell {
 
     private let gogoLabel: UILabel = {
         let label = UILabel()
@@ -43,7 +43,7 @@ class HabitsFirstCell: UICollectionViewCell {
         backgroundColor = .white
         layer.cornerRadius = 8
         clipsToBounds = true
-        self.setupView()
+        setupView()
         percentLabel.text = "\(Int((progressView.progress * 100).rounded()))%"
     }
 

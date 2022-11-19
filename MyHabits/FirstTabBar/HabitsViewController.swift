@@ -21,7 +21,7 @@ class HabitsViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
-        collectionView.register(HabitsFirstCell.self, forCellWithReuseIdentifier: "HabitsFirstCell")
+        collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: "ProgressCell")
         collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: "HabitsCell")
         collectionView.backgroundColor = .systemGray6
         collectionView.dataSource = self
@@ -78,7 +78,7 @@ extension HabitsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath == [0, 0] {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsFirstCell", for: indexPath) as? HabitsFirstCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath) as? ProgressCollectionViewCell
             return cell!
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath) as? HabitsCollectionViewCell

@@ -39,23 +39,21 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
     private let checkButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
-        button.layer.cornerRadius = 8
-//        button.layer.borderColor = UIColor.systemBlue.cgColor
-//        button.layer.borderWidth = 2
-        button.clipsToBounds = true
-        button.setBackgroundImage(UIImage(systemName: "circlebadge"), for: .normal)
-        button.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .highlighted)
+        button.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
+    var buttonPressed: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         layer.cornerRadius = 8
         clipsToBounds = true
-        self.setupView()
+        setupView()
+        addTarget()
+
     }
 
     required init?(coder: NSCoder) {
@@ -87,4 +85,17 @@ class HabitsCollectionViewCell: UICollectionViewCell {
             checkButton.widthAnchor.constraint(equalToConstant: 36)
         ])
     }
+
+
+    private func addTarget() {
+        checkButton.addTarget(self, action: #selector(pressCheck), for: .touchUpInside)
+    }
+    @objc private func pressCheck() {
+        switch buttonPressed {
+        case true: checkButton.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
+        case false: checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+        }
+        buttonPressed.toggle()
+    }
+
 }

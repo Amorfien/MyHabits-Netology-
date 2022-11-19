@@ -43,6 +43,12 @@ class HabitViewController: UIViewController {
         return button
     }()
 
+    private lazy var colorPicker: UIColorPickerViewController = {
+        let cPicker = UIColorPickerViewController()
+        cPicker.delegate = self
+        return cPicker
+    }()
+
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "ВРЕМЯ"
@@ -59,7 +65,7 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    private var mutableLabel: UILabel = {
+    private var datePickerLabel: UILabel = {
         let label = UILabel()
         label.text = "11:15 PM"
         label.font = .systemFont(ofSize: 17, weight: .regular)
@@ -70,11 +76,8 @@ class HabitViewController: UIViewController {
 
     private lazy var pickerView: UIDatePicker = {
         let picker = UIDatePicker()
-//        picker.layer.style =
-//        picker.dataSource = self
-//        picker.delegate = self
-//        picker
-        picker.layer.borderWidth = 1
+        picker.preferredDatePickerStyle = .wheels
+        picker.datePickerMode = .time
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
@@ -99,6 +102,16 @@ class HabitViewController: UIViewController {
         setupUI()
         addTarget()
         alertAction()
+
+        getTimeFromPicker()
+
+    }
+
+    @objc private func getTimeFromPicker() {
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm a"
+        datePickerLabel.text = formatter.string(from: pickerView.date)
     }
 
     private func setupNavigation() {
@@ -119,7 +132,7 @@ class HabitViewController: UIViewController {
         view.addSubview(colorButton)
         view.addSubview(timeLabel)
         view.addSubview(setTimeLabel)
-        view.addSubview(mutableLabel)
+        view.addSubview(datePickerLabel)
         view.addSubview(pickerView)
         view.addSubview(deleteButton)
 
@@ -144,8 +157,8 @@ class HabitViewController: UIViewController {
             setTimeLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             setTimeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 178),
 
-            mutableLabel.topAnchor.constraint(equalTo: setTimeLabel.topAnchor),
-            mutableLabel.leadingAnchor.constraint(equalTo: setTimeLabel.trailingAnchor, constant: 6),
+            datePickerLabel.topAnchor.constraint(equalTo: setTimeLabel.topAnchor),
+            datePickerLabel.leadingAnchor.constraint(equalTo: setTimeLabel.trailingAnchor, constant: 6),
 
             pickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -158,11 +171,9 @@ class HabitViewController: UIViewController {
     }
 
     private func alertAction() {
-        let okAction = UIAlertAction(title: "Отмена", style: .default) {_ in
-//            print("OK")
-        }
+        let okAction = UIAlertAction(title: "Отмена", style: .default)
         let cancelAction = UIAlertAction(title: "Удалить", style: .destructive) {_ in
-//            print("Cancel")
+            self.dismiss(animated: true)
         }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
@@ -170,10 +181,16 @@ class HabitViewController: UIViewController {
 
     private func addTarget() {
         deleteButton.addTarget(self, action: #selector(tapOnAlert), for: .touchUpInside)
+        colorButton.addTarget(self, action: #selector(tapOnColor), for: .touchUpInside)
+        pickerView.addTarget(self, action: #selector(getTimeFromPicker), for: .valueChanged)
 
     }
     @objc private func tapOnAlert() {
         self.present(alertController, animated: true)
+    }
+
+    @objc private func tapOnColor() {
+        present(colorPicker, animated: true)
     }
 
     @objc private func closeHabit() {
@@ -186,38 +203,10 @@ class HabitViewController: UIViewController {
 
 }
 
-/*
-extension HabitViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
+extension HabitViewController: UIColorPickerViewControllerDelegate {
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch component {
-        case 0: return pickerFill.hours.count
-        case 1: return pickerFill.minutes.count
-        default: return pickerFill.am.count
-        }
+    func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
+        colorButton.backgroundColor = color
     }
-
-
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return 70
-    }
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 33
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0: return String(pickerFill.hours[row])
-        case 1: return String(pickerFill.minutes[row])
-        default: return pickerFill.am[row]
-        }
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        mutableLabel.text = "\(pickerFill.hours[pickerView.selectedRow(inComponent: 0)]):\(pickerFill.minutes[pickerView.selectedRow(inComponent: 1)]) \(pickerFill.am[pickerView.selectedRow(inComponent: 2)])"
-    }
-
 
 }
-*/
