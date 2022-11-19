@@ -11,7 +11,8 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
     private let todoLabel: UILabel = {
         let label = UILabel()
-        label.text = "Выпить стакан воды"
+        label.text = "Выпить стакан воды стакан воды стакан воды стакан воды"
+        label.numberOfLines = 2
         label.textColor = .systemBlue
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,10 +40,12 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     private let checkButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.layer.cornerRadius = 18
-        button.layer.borderColor = UIColor.systemBlue.cgColor
-        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 8
+//        button.layer.borderColor = UIColor.systemBlue.cgColor
+//        button.layer.borderWidth = 2
         button.clipsToBounds = true
+        button.setBackgroundImage(UIImage(systemName: "circlebadge"), for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .highlighted)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -70,6 +73,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
             todoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             todoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            todoLabel.widthAnchor.constraint(equalToConstant: 220),
 
             timeLabel.leadingAnchor.constraint(equalTo: todoLabel.leadingAnchor),
             timeLabel.topAnchor.constraint(equalTo: todoLabel.bottomAnchor, constant: 4),

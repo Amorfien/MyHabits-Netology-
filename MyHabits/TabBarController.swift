@@ -25,6 +25,10 @@ class TabBarController: UITabBarController {
         infoViewController.tabBarItem = item2
         UITabBar.appearance().tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
         UITabBar.appearance().backgroundColor = UIColor(red: 242/257, green: 242/257, blue: 242/257, alpha: 1)
+//        UITabBar.appearance().showsLargeContentViewer = true
+//        UITabBar.appearance().scalesLargeContentImage = true
+//        UITabBar.appearance().layer.isDoubleSided = true
+        UITabBar.appearance().clipsToBounds = true
     }
 
 }

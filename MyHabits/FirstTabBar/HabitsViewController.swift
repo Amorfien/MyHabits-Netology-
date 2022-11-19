@@ -21,6 +21,7 @@ class HabitsViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+        collectionView.register(HabitsFirstCell.self, forCellWithReuseIdentifier: "HabitsFirstCell")
         collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: "HabitsCell")
         collectionView.backgroundColor = .systemGray6
         collectionView.dataSource = self
@@ -42,14 +43,15 @@ class HabitsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButton))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
-
+//        tabBarController?.tabBar.showsLargeContentViewer = true
+        //tabBarItem.
     }
 
     private func setupUI() {
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
@@ -75,9 +77,13 @@ extension HabitsViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath) as? HabitsCollectionViewCell
-//        cell?.fill(indexPath: indexPath)
-        return cell!
+        if indexPath == [0, 0] {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsFirstCell", for: indexPath) as? HabitsFirstCell
+            return cell!
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath) as? HabitsCollectionViewCell
+            return cell!
+        }
     }
 
 

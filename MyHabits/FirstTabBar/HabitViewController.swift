@@ -68,10 +68,12 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    private lazy var pickerView: UIPickerView = {
-        let picker = UIPickerView()
-        picker.dataSource = self
-        picker.delegate = self
+    private lazy var pickerView: UIDatePicker = {
+        let picker = UIDatePicker()
+//        picker.layer.style =
+//        picker.dataSource = self
+//        picker.delegate = self
+//        picker
         picker.layer.borderWidth = 1
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
@@ -184,6 +186,7 @@ class HabitViewController: UIViewController {
 
 }
 
+/*
 extension HabitViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
@@ -217,3 +220,4 @@ extension HabitViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 
 }
+*/
