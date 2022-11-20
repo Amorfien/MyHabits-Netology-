@@ -17,7 +17,7 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    private lazy var nameTextField: UITextField = {
+    lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         textField.font = .systemFont(ofSize: 17, weight: .regular)
@@ -71,7 +71,7 @@ class HabitViewController: UIViewController {
         let label = UILabel()
         label.text = "11:15 PM"
         label.font = .systemFont(ofSize: 17, weight: .regular)
-        label.textColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -84,7 +84,7 @@ class HabitViewController: UIViewController {
         return picker
     }()
 
-    private let deleteButton: UIButton = {
+    let deleteButton: UIButton = {
         let button = UIButton()
         button.setTitle("Удалить привычку", for: .normal)
         button.setTitleColor(.red, for: .normal)
@@ -122,7 +122,7 @@ class HabitViewController: UIViewController {
         navigationController?.isToolbarHidden = false
         navigationItem.title = "Создать"
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         let cancelButton = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(closeHabit))
         navigationItem.leftBarButtonItem = cancelButton
         let saveButton = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
@@ -144,7 +144,7 @@ class HabitViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 
             nameTextField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             nameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 46),
@@ -171,6 +171,7 @@ class HabitViewController: UIViewController {
             pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 215),
             pickerView.heightAnchor.constraint(equalToConstant: 216),
 
+            deleteButton.topAnchor.constraint(greaterThanOrEqualTo: pickerView.bottomAnchor),
             deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -52),
             deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])

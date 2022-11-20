@@ -27,6 +27,8 @@ class InfoViewController: UIViewController {
     private let infoText: UITextView = {
         let info = UITextView()
         info.font = UIFont.systemFont(ofSize: 17)
+        info.backgroundColor = .white
+        info.textColor = .black
         info.isScrollEnabled = false
         info.text = """
 Прохождение этапов, за которые за 21 день вырабатывается привычка, подчиняется следующему алгоритму:
@@ -55,7 +57,7 @@ class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 242/257, green: 242/257, blue: 247/257, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         navigationItem.title = "Информация"
         whiteView.contentSize.width = UIScreen.main.bounds.width
         setupUI()

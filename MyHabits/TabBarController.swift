@@ -23,8 +23,8 @@ class TabBarController: UITabBarController {
         let item2 = UITabBarItem(title: "Информация", image:  UIImage(systemName: "info.circle.fill"), tag: 1)
         habitsViewController.tabBarItem = item1
         infoViewController.tabBarItem = item2
-        UITabBar.appearance().tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
-        UITabBar.appearance().backgroundColor = UIColor(red: 242/257, green: 242/257, blue: 242/257, alpha: 1)
+        UITabBar.appearance().tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
+        UITabBar.appearance().backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
 //        UITabBar.appearance().showsLargeContentViewer = true
 //        UITabBar.appearance().scalesLargeContentImage = true
 //        UITabBar.appearance().layer.isDoubleSided = true

@@ -19,7 +19,9 @@ class HabitDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray6
+        // сделал фон белым для ландшафтного режима, кодгда чёлка не закрывает таблицу
+        view.backgroundColor = .white
+//        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
 
         setupNavigation()
         setupView()
@@ -29,7 +31,7 @@ class HabitDetailsViewController: UIViewController {
         navigationController?.isToolbarHidden = false
         navigationItem.title = "Title"
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         let editButton = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editHabit))
         navigationItem.rightBarButtonItem = editButton
 
@@ -48,7 +50,10 @@ class HabitDetailsViewController: UIViewController {
     }
 
     @objc private func editHabit() {
-
+//        navigationController?.pushViewController(HabitViewController(), animated: true)
+        let habitViewController = HabitViewController()
+        navigationController?.presentOnRoot(with: habitViewController)
+        habitViewController.deleteButton.isHidden = false
     }
 
 }

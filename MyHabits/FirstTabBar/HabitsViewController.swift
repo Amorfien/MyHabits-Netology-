@@ -13,7 +13,8 @@ class HabitsViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
-        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 32, height: UIScreen.main.bounds.height)
+        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 132, height: UIScreen.main.bounds.height)
+//        layout.estimatedItemSize = CGSize(width: UIWindowScene., height: UIScreen.main.bounds.height)
         return layout
     }()
 
@@ -31,7 +32,7 @@ class HabitsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 242/257, green: 242/257, blue: 247/257, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         setupNavigation()
         setupUI()
 
@@ -48,7 +49,7 @@ class HabitsViewController: UIViewController {
         navigationItem.title = "Сегодня"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButton))
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
+        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
     }
 
     private func setupUI() {
@@ -56,14 +57,16 @@ class HabitsViewController: UIViewController {
         NSLayoutConstraint.activate([
             habitsCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             habitsCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            habitsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            habitsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            habitsCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            habitsCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 
     @objc private func plusButton() {
-        let habitView = HabitViewController()
-        presentOnRoot(with: habitView)
+        let habitViewController = HabitViewController()
+        presentOnRoot(with: habitViewController)
+        habitViewController.deleteButton.isHidden = true
+        habitViewController.nameTextField.becomeFirstResponder()
     }
 }
 
@@ -113,7 +116,9 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         case 0: cellHeight = 60
         default: cellHeight = 130
         }
-        return CGSize(width: Int(UIScreen.main.bounds.width) - 32, height: cellHeight)
+//        return CGSize(width: Int(UIScreen.main.bounds.width) - 32, height: cellHeight)
+        return CGSize(width: Int(view.safeAreaLayoutGuide.layoutFrame.width) - 32, height: cellHeight)
+//        чтобы при ландшафтном режиме чёлка не перекрывала ячейки
     }
 }
 

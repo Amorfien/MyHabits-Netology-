@@ -31,7 +31,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     private var progressView: UIProgressView = {
         let progress = UIProgressView()
         progress.progress = 0.734
-        progress.progressTintColor = .magenta
+        progress.progressTintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         progress.layer.cornerRadius = 3.5
         progress.clipsToBounds = true
         progress.translatesAutoresizingMaskIntoConstraints = false
