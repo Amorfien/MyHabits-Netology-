@@ -123,6 +123,8 @@ class HabitViewController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         let saveButton = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
         navigationItem.rightBarButtonItem = saveButton
+
+        navigationController?.toolbar.isHidden = true
     }
 
     private func setupUI() {
@@ -165,7 +167,7 @@ class HabitViewController: UIViewController {
             pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 215),
             pickerView.heightAnchor.constraint(equalToConstant: 216),
 
-            deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -76),
+            deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -52),
             deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }

@@ -55,10 +55,10 @@
 			isa = PBXGroup;
 			children = (
 				189F0FFA2926955100739CF2 /* HabitsViewController.swift */,
+				1871139E29293B9900088A1D /* HabitDetailsViewController.swift */,
+				1870BB272927A404004C509A /* HabitViewController.swift */,
 				1871139C2929150200088A1D /* ProgressCollectionViewCell.swift */,
 				18E45FF129280FDF001FE4F3 /* HabitsCollectionViewCell.swift */,
-				1870BB272927A404004C509A /* HabitViewController.swift */,
-				1871139E29293B9900088A1D /* HabitDetailsViewController.swift */,
 			);
 			path = FirstTabBar;
 			sourceTree = "<group>";

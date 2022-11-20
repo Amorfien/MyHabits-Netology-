@@ -19,12 +19,13 @@ class HabitsViewController: UIViewController {
         return layout
     }()
 
-    private lazy var collectionView: UICollectionView = {
+    private lazy var habitsCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: "ProgressCell")
         collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: "HabitsCell")
         collectionView.backgroundColor = .systemGray6
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -35,25 +36,30 @@ class HabitsViewController: UIViewController {
         setupNavigation()
         setupUI()
 
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        navigationController?.toolbar.barStyle = .black
+        navigationController?.toolbar.isHidden = true
     }
 
     private func setupNavigation() {
-        navigationController?.isToolbarHidden = false
         navigationItem.title = "Сегодня"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButton))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
-//        tabBarController?.tabBar.showsLargeContentViewer = true
-        //tabBarItem.
     }
 
     private func setupUI() {
-        view.addSubview(collectionView)
+        view.addSubview(habitsCollectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            habitsCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            habitsCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            habitsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            habitsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 
@@ -71,7 +77,7 @@ extension UIViewController {
     }
 }
 
-extension HabitsViewController: UICollectionViewDataSource {
+extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10
     }
@@ -85,6 +91,14 @@ extension HabitsViewController: UICollectionViewDataSource {
             return cell!
         }
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath == [0, 1] {
+            navigationController?.pushViewController(HabitDetailsViewController(), animated: false)
+        }
+    }
+
+
 
 
 }

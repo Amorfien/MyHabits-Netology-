@@ -77,7 +77,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
             timeLabel.topAnchor.constraint(equalTo: todoLabel.bottomAnchor, constant: 4),
 
             countLabel.leadingAnchor.constraint(equalTo: todoLabel.leadingAnchor),
-            countLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 30),
+            countLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
 
             checkButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 47),
             checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -26),
