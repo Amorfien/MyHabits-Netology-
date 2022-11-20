@@ -58,7 +58,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
 
 
         NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: 60),
+//            contentView.heightAnchor.constraint(equalToConstant: 60),
 
             gogoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             gogoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),

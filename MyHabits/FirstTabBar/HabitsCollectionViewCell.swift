@@ -60,6 +60,15 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+//        FIXME: решить ошибки переиспользования ячеек
+//        switch buttonPressed {
+//        case false: checkButton.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
+//        case true: checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+//        }
+    }
+
     private func setupView() {
         contentView.addSubview(todoLabel)
         contentView.addSubview(timeLabel)
@@ -67,7 +76,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(checkButton)
 
         NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: 130),
+//            contentView.heightAnchor.constraint(equalToConstant: 130),
 
             todoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             todoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
