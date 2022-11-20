@@ -17,11 +17,13 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    private let nameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         textField.font = .systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .blue
+        textField.returnKeyType = .done
+        textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -101,6 +103,7 @@ class HabitViewController: UIViewController {
         setupNavigation()
         setupUI()
         addTarget()
+        setupGestures()
         alertAction()
 
         getTimeFromPicker()
@@ -112,6 +115,7 @@ class HabitViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm a"
         datePickerLabel.text = formatter.string(from: pickerView.date)
+        keyboardHide()
     }
 
     private func setupNavigation() {
@@ -187,12 +191,23 @@ class HabitViewController: UIViewController {
         pickerView.addTarget(self, action: #selector(getTimeFromPicker), for: .valueChanged)
 
     }
+
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
+        view.addGestureRecognizer(tapGesture)
+    }
+
     @objc private func tapOnAlert() {
         self.present(alertController, animated: true)
     }
 
     @objc private func tapOnColor() {
         present(colorPicker, animated: true)
+        keyboardHide()
+    }
+
+    @objc private func tapOnView() {
+        keyboardHide()
     }
 
     @objc private func closeHabit() {
@@ -203,12 +218,25 @@ class HabitViewController: UIViewController {
         self.dismiss(animated: true)
     }
 
+    private func keyboardHide() {
+        view.endEditing(true)
+    }
+
 }
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {
 
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         colorButton.backgroundColor = color
+    }
+
+}
+
+extension HabitViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        keyboardHide()
+        return true
     }
 
 }

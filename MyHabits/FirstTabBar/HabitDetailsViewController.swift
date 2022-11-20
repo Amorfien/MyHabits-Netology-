@@ -32,6 +32,8 @@ class HabitDetailsViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(red: 161/257, green: 22/257, blue: 204/257, alpha: 1)
         let editButton = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editHabit))
         navigationItem.rightBarButtonItem = editButton
+
+        navigationController?.toolbar.isHidden = true
     }
 
     private func setupView() {

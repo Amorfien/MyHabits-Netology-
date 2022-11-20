@@ -12,8 +12,6 @@ class HabitsViewController: UIViewController {
     private var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-//        layout.minimumLineSpacing = 8
-//        layout.minimumInteritemSpacing = 8
         layout.sectionInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
         layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 32, height: UIScreen.main.bounds.height)
         return layout
@@ -36,13 +34,12 @@ class HabitsViewController: UIViewController {
         setupNavigation()
         setupUI()
 
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        navigationController?.toolbar.barStyle = .black
+//        navigationController?.toolbar.barStyle = .black
         navigationController?.toolbar.isHidden = true
     }
 
