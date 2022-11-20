@@ -13,8 +13,7 @@ class HabitsViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
-        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 132, height: UIScreen.main.bounds.height)
-//        layout.estimatedItemSize = CGSize(width: UIWindowScene., height: UIScreen.main.bounds.height)
+        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 32, height: UIScreen.main.bounds.height)
         return layout
     }()
 
@@ -66,6 +65,7 @@ class HabitsViewController: UIViewController {
         let habitViewController = HabitViewController()
         presentOnRoot(with: habitViewController)
         habitViewController.deleteButton.isHidden = true
+        habitViewController.setTitleForVC(title: "Создать")
         habitViewController.nameTextField.becomeFirstResponder()
     }
 }
@@ -80,7 +80,7 @@ extension UIViewController {
 
 extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        30
+        7
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -103,7 +103,11 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 1 {
-            navigationController?.pushViewController(HabitDetailsViewController(), animated: false)
+            let habitDetailsViewController = HabitDetailsViewController()
+            navigationController?.pushViewController(habitDetailsViewController, animated: false)
+            let cell = HabitsCollectionViewCell()
+            habitDetailsViewController.habitTitle = cell.todoLabel.text ?? ""
+            habitDetailsViewController.habitColor = cell.checkButton.tintColor
         }
     }
 

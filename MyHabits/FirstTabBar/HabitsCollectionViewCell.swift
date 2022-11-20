@@ -9,11 +9,14 @@ import UIKit
 
 class HabitsCollectionViewCell: UICollectionViewCell {
 
-    private let todoLabel: UILabel = {
+    var habitTitle = "Плавать по ночам"
+    var habitColor = UIColor.systemBlue
+
+    lazy var todoLabel: UILabel = {
         let label = UILabel()
-        label.text = "Выпить стакан воды стакан воды стакан воды стакан воды"
+        label.text = habitTitle
         label.numberOfLines = 2
-        label.textColor = .systemBlue
+        label.textColor = habitColor
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,9 +40,11 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private let checkButton: UIButton = {
+    lazy var checkButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
+//  FIXME: перехватить цвет
+        button.tintColor = habitColor
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

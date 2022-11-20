@@ -21,7 +21,7 @@ class HabitViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         textField.font = .systemFont(ofSize: 17, weight: .regular)
-        textField.textColor = .blue
+        textField.textColor = .orange
         textField.returnKeyType = .done
         textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    private let colorButton: UIButton = {
+    var colorButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .orange
         button.layer.cornerRadius = 15
@@ -94,7 +94,7 @@ class HabitViewController: UIViewController {
         return button
     }()
 
-    let alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку название выбранной привычки?", preferredStyle: .alert)
+    lazy var alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку?", preferredStyle: .alert)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +120,7 @@ class HabitViewController: UIViewController {
 
     private func setupNavigation() {
         navigationController?.isToolbarHidden = false
-        navigationItem.title = "Создать"
+//        navigationItem.title = "Создать"
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         let cancelButton = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(closeHabit))
@@ -199,6 +199,7 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func tapOnAlert() {
+        alertController.message = "Вы хотите удалить привычку \"\(nameTextField.text ?? "")\"?"
         self.present(alertController, animated: true)
     }
 
@@ -223,12 +224,17 @@ class HabitViewController: UIViewController {
         view.endEditing(true)
     }
 
+    func setTitleForVC (title: String) {
+        navigationItem.title = title
+    }
+
 }
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {
 
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         colorButton.backgroundColor = color
+        nameTextField.textColor = color
     }
 
 }
