@@ -65,7 +65,7 @@ class HabitsViewController: UIViewController {
         let habitViewController = HabitViewController()
         presentOnRoot(with: habitViewController)
         habitViewController.deleteButton.isHidden = true
-        habitViewController.setTitleForVC(title: "Создать")
+        habitViewController.habitOption(title: "Создать", name: nil, color: .orange, deleteIsHiden: true)
         habitViewController.nameTextField.becomeFirstResponder()
     }
 }
@@ -121,8 +121,8 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         default: cellHeight = 130
         }
 //        return CGSize(width: Int(UIScreen.main.bounds.width) - 32, height: cellHeight)
-        return CGSize(width: Int(view.safeAreaLayoutGuide.layoutFrame.width) - 32, height: cellHeight)
 //        чтобы при ландшафтном режиме чёлка не перекрывала ячейки
+        return CGSize(width: Int(view.safeAreaLayoutGuide.layoutFrame.width) - 32, height: cellHeight)
     }
 }
 

@@ -12,19 +12,19 @@ class HabitDetailsViewController: UIViewController {
     private lazy var detailTableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
+//    MARK: публичные свойства для передачи на экран "Править"
+//            заполняются данными из ячейки HabitsCollectionViewCell
     var habitTitle = ""
     var habitColor = UIColor.black
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // сделал фон белым для ландшафтного режима, кодгда чёлка не закрывает таблицу
-        view.backgroundColor = .white
-//        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
 
         setupNavigation()
         setupView()
@@ -46,28 +46,23 @@ class HabitDetailsViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             detailTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            detailTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            detailTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            detailTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            detailTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             detailTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
     @objc private func editHabit() {
-//        navigationController?.pushViewController(HabitViewController(), animated: true)
         let habitViewController = HabitViewController()
         navigationController?.presentOnRoot(with: habitViewController)
-        habitViewController.deleteButton.isHidden = false
-        habitViewController.nameTextField.text = habitTitle
-        habitViewController.nameTextField.textColor = habitColor
-        habitViewController.colorButton.backgroundColor = habitColor
-        habitViewController.setTitleForVC(title: "Править")
+        habitViewController.habitOption(title: "Править", name: habitTitle, color: habitColor, deleteIsHiden: false)
     }
 
 }
 
 extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 7
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

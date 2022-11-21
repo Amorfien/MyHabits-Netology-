@@ -224,8 +224,13 @@ class HabitViewController: UIViewController {
         view.endEditing(true)
     }
 
-    func setTitleForVC (title: String) {
+//    MARK: Публичный метод заполнения полей и заголовка Создать/Править
+    func habitOption(title: String, name: String?, color: UIColor, deleteIsHiden: Bool) {
         navigationItem.title = title
+        nameTextField.text = name
+        nameTextField.textColor = color
+        colorButton.backgroundColor = color
+        deleteButton.isHidden = deleteIsHiden
     }
 
 }
