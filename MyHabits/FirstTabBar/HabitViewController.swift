@@ -217,11 +217,22 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func saveHabit() {
+        createHabit()
         self.dismiss(animated: true)
     }
 
     private func keyboardHide() {
         view.endEditing(true)
+    }
+
+    func createHabit() {
+        let newHabit = Habit(name: nameTextField.text ?? "",
+                             date: pickerView.date,
+                             color: colorButton.backgroundColor!)
+        let store = HabitsStore.shared
+        store.habits.append(newHabit)
+        print(newHabit)
+        print(store.habits.count)
     }
 
 //    MARK: Публичный метод заполнения полей и заголовка Создать/Править

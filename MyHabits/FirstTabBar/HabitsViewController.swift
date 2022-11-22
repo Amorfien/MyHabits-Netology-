@@ -17,7 +17,7 @@ class HabitsViewController: UIViewController {
         return layout
     }()
 
-    private lazy var habitsCollectionView: UICollectionView = {
+    lazy var habitsCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: "ProgressCell")
         collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: "HabitsCell")
@@ -29,11 +29,21 @@ class HabitsViewController: UIViewController {
         return collectionView
     }()
 
+    static var countOfChecks: Int = 0 //{
+//        didSet {
+//            print(countOfChecks, "1111")
+//            ProgressCollectionViewCell().progressView.setProgress(0.77, animated: true)
+//            HabitsViewController().habitsCollectionView.reloadData()
+//        }
+//    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         setupNavigation()
         setupUI()
+
+        print(HabitsStore.shared.habits)
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +92,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        default: return 6
+        default: return 3
         }
     }
 
@@ -113,6 +123,21 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             let cell = HabitsCollectionViewCell()
             habitDetailsViewController.habitTitle = cell.todoLabel.text ?? ""
             habitDetailsViewController.habitColor = cell.checkButton.tintColor
+        } else {
+//            collectionView.deselectItem(at: [0, 0], animated: true)
+
+//            collectionView.reloadData()
+
+//            collectionView.reloadItems(at: [[0,0]])
+
+            for cell in collectionView.visibleCells {
+                if let cell = cell as? ProgressCollectionViewCell {
+                    let percent = Float(HabitsViewController.countOfChecks) / Float(collectionView.visibleCells.count - 1)
+                    cell.progressView.setProgress(percent, animated: true)
+                    cell.percentLabel.text = "\(Int((percent * 100).rounded()))%"
+                }
+            }
+
         }
     }
 

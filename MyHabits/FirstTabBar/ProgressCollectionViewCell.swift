@@ -18,9 +18,9 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private var percentLabel: UILabel = {
+    var percentLabel: UILabel = {
         let label = UILabel()
-        label.text = "50%"
+        label.text = "0%"
         label.textAlignment = .right
         label.textColor = .systemGray
         label.font = .systemFont(ofSize: 13, weight: .regular)
@@ -28,9 +28,9 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private var progressView: UIProgressView = {
+    var progressView: UIProgressView = {
         let progress = UIProgressView()
-        progress.progress = 0.734
+        progress.progress = 0
         progress.progressTintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         progress.layer.cornerRadius = 3.5
         progress.clipsToBounds = true
@@ -44,7 +44,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 8
         clipsToBounds = true
         setupView()
-        percentLabel.text = "\(Int((progressView.progress * 100).rounded()))%"
     }
 
     required init?(coder: NSCoder) {

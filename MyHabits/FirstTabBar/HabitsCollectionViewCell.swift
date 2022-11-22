@@ -106,8 +106,14 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     }
     @objc private func pressCheck() {
         switch buttonPressed {
-        case true: checkButton.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
-        case false: checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+        case true: do {
+            self.checkButton.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
+            HabitsViewController.countOfChecks -= 1
+        }
+        case false: do {
+            self.checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+            HabitsViewController.countOfChecks += 1
+        }
         }
         buttonPressed.toggle()
     }
