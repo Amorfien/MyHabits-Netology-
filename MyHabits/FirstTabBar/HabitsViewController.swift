@@ -12,7 +12,7 @@ class HabitsViewController: UIViewController {
     private var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        layout.sectionInset = UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 16)
         layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 32, height: UIScreen.main.bounds.height)
         return layout
     }()
@@ -80,21 +80,26 @@ extension UIViewController {
 
 extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        7
+        switch section {
+        case 0: return 1
+        default: return 6
+        }
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 {
+        if indexPath.section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath) as? ProgressCollectionViewCell else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCell", for: indexPath)
-                cell.backgroundColor = .systemRed
                 return cell
             }
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath) as? HabitsCollectionViewCell else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCell", for: indexPath)
-                cell.backgroundColor = .systemRed
                 return cell
             }
             return cell
@@ -102,7 +107,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == 1 {
+        if indexPath.section > 0 {
             let habitDetailsViewController = HabitDetailsViewController()
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
             let cell = HabitsCollectionViewCell()
@@ -116,7 +121,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
 extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellHeight: Int
-        switch indexPath.item {
+        switch indexPath.section {
         case 0: cellHeight = 60
         default: cellHeight = 130
         }
