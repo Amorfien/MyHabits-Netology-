@@ -17,11 +17,11 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    lazy var nameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         textField.font = .systemFont(ofSize: 17, weight: .regular)
-        textField.textColor = .orange
+        textField.textColor = .black
         textField.returnKeyType = .done
         textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -36,9 +36,9 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    var colorButton: UIButton = {
+    private var colorButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .orange
+        button.backgroundColor = .black
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +84,7 @@ class HabitViewController: UIViewController {
         return picker
     }()
 
-    let deleteButton: UIButton = {
+    private let deleteButton: UIButton = {
         let button = UIButton()
         button.setTitle("Удалить привычку", for: .normal)
         button.setTitleColor(.red, for: .normal)
@@ -94,7 +94,9 @@ class HabitViewController: UIViewController {
         return button
     }()
 
-    lazy var alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку?", preferredStyle: .alert)
+    private lazy var alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку?", preferredStyle: .alert)
+
+    private var index: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,10 +179,12 @@ class HabitViewController: UIViewController {
         ])
     }
 
+//    MARK: - Удаление привычки
     private func alertAction() {
         let okAction = UIAlertAction(title: "Отмена", style: .default)
         let cancelAction = UIAlertAction(title: "Удалить", style: .destructive) {_ in
             self.dismiss(animated: true)
+            HabitsStore.shared.habits.remove(at: self.index!)//.removeLast() // пока удаляется ПОСЛЕДНЯЯ
         }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
@@ -201,6 +205,8 @@ class HabitViewController: UIViewController {
     @objc private func tapOnAlert() {
         alertController.message = "Вы хотите удалить привычку \"\(nameTextField.text ?? "")\"?"
         self.present(alertController, animated: true)
+        print(index!)
+        print(HabitsStore.shared.habits.indices)
     }
 
     @objc private func tapOnColor() {
@@ -217,7 +223,11 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func saveHabit() {
+        guard nameTextField.text != "" else { return }
         createHabit()
+        // пытаюсь обновить экран
+        let hvc = HabitsViewController()
+        hvc.reload()
         self.dismiss(animated: true)
     }
 
@@ -225,23 +235,33 @@ class HabitViewController: UIViewController {
         view.endEditing(true)
     }
 
+//    MARK: - Создание новой привычки
     func createHabit() {
-        let newHabit = Habit(name: nameTextField.text ?? "",
+        let store = HabitsStore.shared
+        let newHabit = Habit(name: nameTextField.text!,
                              date: pickerView.date,
                              color: colorButton.backgroundColor!)
-        let store = HabitsStore.shared
-        store.habits.append(newHabit)
-        print(newHabit)
-        print(store.habits.count)
+        if self.index == nil {
+            store.habits.append(newHabit)
+            print(newHabit)
+            print(store.habits.count)
+        } else {
+            store.habits.remove(at: index!)
+            store.habits.insert(newHabit, at: index!)
+        }
     }
 
-//    MARK: Публичный метод заполнения полей и заголовка Создать/Править
-    func habitOption(title: String, name: String?, color: UIColor, deleteIsHiden: Bool) {
+//    MARK: - Публичный метод заполнения полей и заголовка Создать/Править
+    func habitOption(index: Int?, title: String, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool) {
         navigationItem.title = title
         nameTextField.text = name
         nameTextField.textColor = color
         colorButton.backgroundColor = color
         deleteButton.isHidden = deleteIsHiden
+        if isTyping {
+            nameTextField.becomeFirstResponder()
+        }
+        self.index = index
     }
 
 }

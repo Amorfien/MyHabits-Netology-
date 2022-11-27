@@ -72,4 +72,12 @@ class ProgressCollectionViewCell: UICollectionViewCell {
 
         ])
     }
+
+    func setProgress(percent: Float) {
+
+        progressView.setProgress(percent, animated: true)
+        percentLabel.text = "\(Int((percent * 100).rounded()))%"
+        
+    }
+
 }

@@ -9,20 +9,17 @@ import UIKit
 
 class HabitsCollectionViewCell: UICollectionViewCell {
 
-    var habitTitle = "Плавать по ночам"
-    var habitColor = UIColor.systemBlue
-
     lazy var todoLabel: UILabel = {
         let label = UILabel()
-        label.text = habitTitle
+        label.text = ""
         label.numberOfLines = 2
-        label.textColor = habitColor
+        label.textColor = .orange
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
-    private let timeLabel: UILabel = {
+    let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "Каждый день в 7:30"
         label.textColor = .systemGray2
@@ -31,7 +28,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private let countLabel: UILabel = {
+    private var countLabel: UILabel = {
         let label = UILabel()
         label.text = "Счётчик: 0"
         label.textColor = .systemGray
@@ -40,16 +37,16 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    lazy var checkButton: UIButton = {
+    private var checkButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
-//  FIXME: перехватить цвет
-        button.tintColor = habitColor
+        button.tintColor = .orange
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    var buttonPressed: Bool = false
+    private var buttonPressed: Bool = false
+    private var counter: Int = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -105,17 +102,23 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         checkButton.addTarget(self, action: #selector(pressCheck), for: .touchUpInside)
     }
     @objc private func pressCheck() {
-        switch buttonPressed {
-        case true: do {
-            self.checkButton.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
-            HabitsViewController.countOfChecks -= 1
-        }
-        case false: do {
-            self.checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            HabitsViewController.countOfChecks += 1
-        }
-        }
+        let name = buttonPressed ? "circle" : "checkmark.circle.fill"
+        checkButton.setBackgroundImage(UIImage(systemName: name), for: .normal)
+
+        // временный метод счётчика
+        HabitsViewController.countOfChecks = buttonPressed ? HabitsViewController.countOfChecks - 1 : HabitsViewController.countOfChecks + 1
+        if !buttonPressed { counter += 1 }
+        countLabel.text = "Счётчик: \(counter)"
+
         buttonPressed.toggle()
+    }
+
+//    MARK: - Публичный метод настройки ячейки
+    func setCell(name: String, color: UIColor, dateString: String) {
+        self.todoLabel.text = name
+        self.checkButton.tintColor = color
+        self.todoLabel.textColor = color
+        self.timeLabel.text = dateString
     }
 
 }

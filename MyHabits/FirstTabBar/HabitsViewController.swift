@@ -17,7 +17,7 @@ class HabitsViewController: UIViewController {
         return layout
     }()
 
-    lazy var habitsCollectionView: UICollectionView = {
+    private lazy var habitsCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: "ProgressCell")
         collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: "HabitsCell")
@@ -29,13 +29,7 @@ class HabitsViewController: UIViewController {
         return collectionView
     }()
 
-    static var countOfChecks: Int = 0 //{
-//        didSet {
-//            print(countOfChecks, "1111")
-//            ProgressCollectionViewCell().progressView.setProgress(0.77, animated: true)
-//            HabitsViewController().habitsCollectionView.reloadData()
-//        }
-//    }
+    static var countOfChecks: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,22 +37,23 @@ class HabitsViewController: UIViewController {
         setupNavigation()
         setupUI()
 
-        print(HabitsStore.shared.habits)
+        for habits in HabitsStore.shared.habits {
+            print(habits.name)
+        }
+        print(HabitsStore.shared.habits.count)
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-
-//        navigationController?.toolbar.barStyle = .black
-        navigationController?.toolbar.isHidden = true
     }
 
     private func setupNavigation() {
         navigationItem.title = "Сегодня"
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButton))
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
+        // временная кнопка обновления
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadObj))
     }
 
     private func setupUI() {
@@ -73,10 +68,16 @@ class HabitsViewController: UIViewController {
 
     @objc private func plusButton() {
         let habitViewController = HabitViewController()
+        habitViewController.habitOption(index: nil,title: "Создать", name: nil, color: .black, deleteIsHiden: true, isTyping: true)
         presentOnRoot(with: habitViewController)
-        habitViewController.deleteButton.isHidden = true
-        habitViewController.habitOption(title: "Создать", name: nil, color: .orange, deleteIsHiden: true)
-        habitViewController.nameTextField.becomeFirstResponder()
+    }
+
+    func reload() {
+//        self.habitsCollectionView.reloadData()
+        self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
+    }
+    @objc private func reloadObj() {
+        self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
     }
 }
 
@@ -92,7 +93,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        default: return 3
+        default: return HabitsStore.shared.habits.count
         }
     }
 
@@ -102,15 +103,16 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath) as? ProgressCollectionViewCell else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCell", for: indexPath)
-                return cell
-            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath)
+//            if let cell = cell as? ProgressCollectionViewCell { return cell }
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath) as? HabitsCollectionViewCell else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCell", for: indexPath)
-                return cell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath)
+            if let cell = cell as? HabitsCollectionViewCell {
+                let habit = HabitsStore.shared.habits[indexPath.item]
+                cell.setCell(name: habit.name,
+                             color: habit.color,
+                             dateString: habit.dateString)
             }
             return cell
         }
@@ -118,30 +120,24 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section > 0 {
-            let habitDetailsViewController = HabitDetailsViewController()
+            let habit = HabitsStore.shared.habits[indexPath.item]
+            let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item, habitTitle: habit.name, habitColor: habit.color)
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
-            let cell = HabitsCollectionViewCell()
-            habitDetailsViewController.habitTitle = cell.todoLabel.text ?? ""
-            habitDetailsViewController.habitColor = cell.checkButton.tintColor
         } else {
-//            collectionView.deselectItem(at: [0, 0], animated: true)
-
-//            collectionView.reloadData()
-
-//            collectionView.reloadItems(at: [[0,0]])
-
+            let habits = HabitsStore.shared.habits
             for cell in collectionView.visibleCells {
                 if let cell = cell as? ProgressCollectionViewCell {
-                    let percent = Float(HabitsViewController.countOfChecks) / Float(collectionView.visibleCells.count - 1)
-                    cell.progressView.setProgress(percent, animated: true)
-                    cell.percentLabel.text = "\(Int((percent * 100).rounded()))%"
+                    if habits.count > 0 {
+                        let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
+                        cell.setProgress(percent: percent)
+                    }
                 }
             }
-
         }
     }
 
 }
+
 
 extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

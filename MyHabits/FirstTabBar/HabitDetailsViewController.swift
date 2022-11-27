@@ -17,10 +17,10 @@ class HabitDetailsViewController: UIViewController {
         return tableView
     }()
 
-//    MARK: публичные свойства для передачи на экран "Править"
 //            заполняются данными из ячейки HabitsCollectionViewCell
-    var habitTitle = ""
-    var habitColor = UIColor.black
+    private var index = 0
+    private var habitTitle = ""
+    private var habitColor = UIColor.black
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,17 @@ class HabitDetailsViewController: UIViewController {
 
         setupNavigation()
         setupView()
+    }
+
+    init(index: Int, habitTitle: String, habitColor: UIColor) {
+        super.init(nibName: nil, bundle: nil)
+        self.index = index
+        self.habitTitle = habitTitle
+        self.habitColor = habitColor
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupNavigation() {
@@ -54,8 +65,8 @@ class HabitDetailsViewController: UIViewController {
 
     @objc private func editHabit() {
         let habitViewController = HabitViewController()
+        habitViewController.habitOption(index: index, title: "Править", name: habitTitle, color: habitColor, deleteIsHiden: false, isTyping: false)
         navigationController?.presentOnRoot(with: habitViewController)
-        habitViewController.habitOption(title: "Править", name: habitTitle, color: habitColor, deleteIsHiden: false)
     }
 
 }
