@@ -97,15 +97,13 @@ class HabitViewController: UIViewController {
     private lazy var alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку?", preferredStyle: .alert)
 
     private var index: Int?
-    private var navTitle: String
     private var name: String?
     private var color: UIColor
     private var deleteIsHiden: Bool
     private var isTyping: Bool
 
-    public init(index: Int?, navTitle: String, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool) {
+    public init(index: Int?, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool) {
         self.index = index
-        self.navTitle = navTitle
         self.name = name
         self.color = color
         self.deleteIsHiden = deleteIsHiden
@@ -143,7 +141,6 @@ class HabitViewController: UIViewController {
 
     private func setupNavigation() {
         navigationController?.isToolbarHidden = false
-//        navigationItem.title = "Создать"
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         let cancelButton = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(closeHabit))
@@ -205,7 +202,7 @@ class HabitViewController: UIViewController {
         let okAction = UIAlertAction(title: "Отмена", style: .default)
         let cancelAction = UIAlertAction(title: "Удалить", style: .destructive) {_ in
             self.dismiss(animated: true)
-            HabitsStore.shared.habits.remove(at: self.index!)//.removeLast() // пока удаляется ПОСЛЕДНЯЯ
+            HabitsStore.shared.habits.remove(at: self.index!)
         }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
@@ -226,8 +223,6 @@ class HabitViewController: UIViewController {
     @objc private func tapOnAlert() {
         alertController.message = "Вы хотите удалить привычку \"\(nameTextField.text ?? "")\"?"
         self.present(alertController, animated: true)
-        print(index!)
-        print(HabitsStore.shared.habits.indices)
     }
 
     @objc private func tapOnColor() {
@@ -264,8 +259,6 @@ class HabitViewController: UIViewController {
                              color: colorButton.backgroundColor!)
         if self.index == nil {
             store.habits.append(newHabit)
-            print(newHabit)
-            print(store.habits.count)
         } else {
             store.habits.remove(at: index!)
             store.habits.insert(newHabit, at: index!)
@@ -274,7 +267,7 @@ class HabitViewController: UIViewController {
 
 //    MARK: - Публичный метод заполнения полей и заголовка Создать/Править
     func habitOption() {
-        navigationItem.title = navTitle
+        navigationItem.title = (index == nil) ? "Создать" : "Править"
         nameTextField.text = name
         nameTextField.textColor = color
         colorButton.backgroundColor = color

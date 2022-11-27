@@ -30,6 +30,51 @@ class HabitsViewController: UIViewController {
     }()
 
     static var countOfChecks: Int = 0
+/*
+//  MARK: - Проверка срабатывания этапов жизненного цикла
+
+    // Загрузка вью
+    override func loadView() {
+        super.loadView()
+        print(#function)
+    }
+
+    // срабатывает каждый раз после загрузки вью
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        self.habitsCollectionView.reloadData()
+        print(#function)
+    }
+    // срабатывает перед тем как контроллер закроется
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print(#function)
+    }
+
+    // срабатывает после того как контроллер закроется
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print(#function)
+    }
+
+    // срабатывает при развороте экрана
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print(#function)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print(#function)
+    }
+
+    // при удалении контроллера из памяти
+    deinit {
+        print(#function)
+    }
+*/
+//  MARK: -
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +82,14 @@ class HabitsViewController: UIViewController {
         setupNavigation()
         setupUI()
 
-        for habits in HabitsStore.shared.habits {
-            print(habits.name)
-        }
-        print(HabitsStore.shared.habits.count)
+        print(#function)
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
+        self.habitsCollectionView.reloadData()
+        print(#function)
     }
 
     private func setupNavigation() {
@@ -54,6 +98,7 @@ class HabitsViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         // временная кнопка обновления
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadObj))
+        navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
     }
 
     private func setupUI() {
@@ -67,19 +112,20 @@ class HabitsViewController: UIViewController {
     }
 
     @objc private func plusButton() {
-        let habitViewController = HabitViewController(index: nil, navTitle: "Создать",
-                                                      name: nil, color: .black,
+        let habitViewController = HabitViewController(index: nil, name: nil, color: .black,
                                                       deleteIsHiden: true, isTyping: true)
+//        self.navigationController?.pushViewController(habitViewController, animated: true)
+//        self.navigationController?.present(habitViewController, animated: true)
+
         presentOnRoot(with: habitViewController)
     }
 
     func reload() {
-//        self.habitsCollectionView.reloadData()
-        self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
+        self.habitsCollectionView.reloadData()
     }
+//    FIXME: Временная кнопка обновления
     @objc private func reloadObj() {
         self.habitsCollectionView.reloadData()
-//        self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
     }
 }
 
@@ -106,8 +152,16 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath)
-//            if let cell = cell as? ProgressCollectionViewCell { return cell }
-            return cell
+            if let progressCell = cell as? ProgressCollectionViewCell {
+                let habits = HabitsStore.shared.habits
+                if habits.count > 0 {
+                    let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
+                    progressCell.setProgress(percent: percent)
+                } else {
+                    progressCell.setProgress(percent: nil)
+                }
+            }
+                return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath)
             if let cell = cell as? HabitsCollectionViewCell {
@@ -125,16 +179,6 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             let habit = HabitsStore.shared.habits[indexPath.item]
             let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item, habitTitle: habit.name, habitColor: habit.color)
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
-        } else {
-            let habits = HabitsStore.shared.habits
-            for cell in collectionView.visibleCells {
-                if let cell = cell as? ProgressCollectionViewCell {
-                    if habits.count > 0 {
-                        let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
-                        cell.setProgress(percent: percent)
-                    }
-                }
-            }
         }
     }
 
@@ -148,8 +192,6 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         case 0: cellHeight = 60
         default: cellHeight = 130
         }
-//        return CGSize(width: Int(UIScreen.main.bounds.width) - 32, height: cellHeight)
-//        чтобы при ландшафтном режиме чёлка не перекрывала ячейки
         return CGSize(width: Int(view.safeAreaLayoutGuide.layoutFrame.width) - 32, height: cellHeight)
     }
 }
