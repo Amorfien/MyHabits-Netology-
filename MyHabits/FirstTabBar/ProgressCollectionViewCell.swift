@@ -40,9 +40,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
-        layer.cornerRadius = 8
-        clipsToBounds = true
         setupView()
     }
 
@@ -51,14 +48,15 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupView() {
+        backgroundColor = .white
+        layer.cornerRadius = 8
+        clipsToBounds = true
+
         contentView.addSubview(gogoLabel)
         contentView.addSubview(percentLabel)
         contentView.addSubview(progressView)
 
-
         NSLayoutConstraint.activate([
-//            contentView.heightAnchor.constraint(equalToConstant: 60),
-
             gogoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             gogoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
 
@@ -69,7 +67,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
             progressView.leadingAnchor.constraint(equalTo: gogoLabel.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: percentLabel.trailingAnchor),
             progressView.heightAnchor.constraint(equalToConstant: 7)
-
         ])
     }
 

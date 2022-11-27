@@ -67,8 +67,9 @@ class HabitsViewController: UIViewController {
     }
 
     @objc private func plusButton() {
-        let habitViewController = HabitViewController()
-        habitViewController.habitOption(index: nil,title: "Создать", name: nil, color: .black, deleteIsHiden: true, isTyping: true)
+        let habitViewController = HabitViewController(index: nil, navTitle: "Создать",
+                                                      name: nil, color: .black,
+                                                      deleteIsHiden: true, isTyping: true)
         presentOnRoot(with: habitViewController)
     }
 
@@ -77,7 +78,8 @@ class HabitsViewController: UIViewController {
         self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
     }
     @objc private func reloadObj() {
-        self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
+        self.habitsCollectionView.reloadData()
+//        self.habitsCollectionView.reloadSections(IndexSet(integer: 1))
     }
 }
 

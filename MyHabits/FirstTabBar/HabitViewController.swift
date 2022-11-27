@@ -97,6 +97,25 @@ class HabitViewController: UIViewController {
     private lazy var alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку?", preferredStyle: .alert)
 
     private var index: Int?
+    private var navTitle: String
+    private var name: String?
+    private var color: UIColor
+    private var deleteIsHiden: Bool
+    private var isTyping: Bool
+
+    public init(index: Int?, navTitle: String, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool) {
+        self.index = index
+        self.navTitle = navTitle
+        self.name = name
+        self.color = color
+        self.deleteIsHiden = deleteIsHiden
+        self.isTyping = isTyping
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +128,8 @@ class HabitViewController: UIViewController {
         alertAction()
 
         getTimeFromPicker()
+
+        habitOption()
 
     }
 
@@ -252,8 +273,8 @@ class HabitViewController: UIViewController {
     }
 
 //    MARK: - Публичный метод заполнения полей и заголовка Создать/Править
-    func habitOption(index: Int?, title: String, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool) {
-        navigationItem.title = title
+    func habitOption() {
+        navigationItem.title = navTitle
         nameTextField.text = name
         nameTextField.textColor = color
         colorButton.backgroundColor = color
@@ -261,7 +282,6 @@ class HabitViewController: UIViewController {
         if isTyping {
             nameTextField.becomeFirstResponder()
         }
-        self.index = index
     }
 
 }

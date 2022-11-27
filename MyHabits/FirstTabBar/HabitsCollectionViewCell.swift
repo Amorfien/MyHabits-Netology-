@@ -50,12 +50,8 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
-        layer.cornerRadius = 8
-        clipsToBounds = true
         setupView()
         addTarget()
-
     }
 
     required init?(coder: NSCoder) {
@@ -72,14 +68,16 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupView() {
+        backgroundColor = .white
+        layer.cornerRadius = 8
+        clipsToBounds = true
+
         contentView.addSubview(todoLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(countLabel)
         contentView.addSubview(checkButton)
 
         NSLayoutConstraint.activate([
-//            contentView.heightAnchor.constraint(equalToConstant: 130),
-
             todoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             todoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             todoLabel.widthAnchor.constraint(equalToConstant: 220),

@@ -64,8 +64,9 @@ class HabitDetailsViewController: UIViewController {
     }
 
     @objc private func editHabit() {
-        let habitViewController = HabitViewController()
-        habitViewController.habitOption(index: index, title: "Править", name: habitTitle, color: habitColor, deleteIsHiden: false, isTyping: false)
+        let habitViewController = HabitViewController(index: index, navTitle: "Править",
+                                                      name: habitTitle, color: habitColor,
+                                                      deleteIsHiden: false, isTyping: false)
         navigationController?.presentOnRoot(with: habitViewController)
     }
 
