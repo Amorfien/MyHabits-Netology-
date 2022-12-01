@@ -88,8 +88,8 @@ class HabitsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        self.habitsCollectionView.reloadData()
-        print(#function)
+//        self.habitsCollectionView.reloadData()
+//        print(#function)
     }
 
     private func setupNavigation() {
@@ -114,8 +114,8 @@ class HabitsViewController: UIViewController {
     @objc private func plusButton() {
         let habitViewController = HabitViewController(index: nil, name: nil, color: .black,
                                                       deleteIsHiden: true, isTyping: true)
-//        self.navigationController?.pushViewController(habitViewController, animated: true)
-//        self.navigationController?.present(habitViewController, animated: true)
+
+        habitViewController.delegate = self
 
         presentOnRoot(with: habitViewController)
     }
@@ -194,5 +194,16 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         }
         return CGSize(width: Int(view.safeAreaLayoutGuide.layoutFrame.width) - 32, height: cellHeight)
     }
+}
+
+extension HabitsViewController: HabitViewControllerDelegate {
+
+    func didAddNewHabbit() {
+        self.habitsCollectionView.performBatchUpdates {
+            let habitsCount = HabitsStore.shared.habits.count - 1
+            self.habitsCollectionView.insertItems(at: [IndexPath(item: habitsCount, section: 1)])
+        }
+    }
+
 }
 

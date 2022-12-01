@@ -79,6 +79,8 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = .white
+        cell.accessoryType = .checkmark
+        cell.tintColor = #colorLiteral(red: 0.6902361512, green: 0, blue: 0.8297754526, alpha: 1)
         cell.textLabel?.text = "\(indexPath[1] + 1)"
         return cell
     }

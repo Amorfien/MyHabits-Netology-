@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol HabitViewControllerDelegate: AnyObject {
+    func didAddNewHabbit()
+}
+
 class HabitViewController: UIViewController {
+
+    weak var delegate: HabitViewControllerDelegate?
 
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -235,16 +241,18 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func closeHabit() {
-        self.dismiss(animated: true)
+//        self.navigationController?.popToRootViewController(animated: true)
+        self.dismiss(animated: true) {
+//            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
 
     @objc private func saveHabit() {
         guard nameTextField.text != "" else { return }
         createHabit()
-        // пытаюсь обновить экран
-        let hvc = HabitsViewController()
-        hvc.reload()
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) {
+            self.delegate?.didAddNewHabbit()
+        }
     }
 
     private func keyboardHide() {
