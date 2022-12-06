@@ -9,6 +9,8 @@ import UIKit
 
 class HabitDetailsViewController: UIViewController {
 
+    weak var delegate: CloseDetailViewControllerDelegate?
+
     private lazy var detailTableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
@@ -66,6 +68,7 @@ class HabitDetailsViewController: UIViewController {
     @objc private func editHabit() {
         let habitViewController = HabitViewController(index: index, name: habitTitle, color: habitColor,
                                                       deleteIsHiden: false, isTyping: false)
+        habitViewController.delegateClose = self
         navigationController?.presentOnRoot(with: habitViewController)
     }
 
@@ -80,6 +83,7 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
         let cell = UITableViewCell()
         cell.backgroundColor = .white
         cell.accessoryType = .checkmark
+        cell.selectionStyle = .none
         cell.tintColor = #colorLiteral(red: 0.6902361512, green: 0, blue: 0.8297754526, alpha: 1)
         cell.textLabel?.text = "\(indexPath[1] + 1)"
         return cell
@@ -88,4 +92,10 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
         return "АКТИВНОСТЬ"
     }
 
+}
+
+extension HabitDetailsViewController: CloseDetailViewControllerDelegate {
+    func popToRootVC() {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }

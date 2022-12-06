@@ -82,7 +82,7 @@ class HabitsViewController: UIViewController {
         setupNavigation()
         setupUI()
 
-        print(#function)
+//        print(#function)
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +96,7 @@ class HabitsViewController: UIViewController {
         navigationItem.title = "Сегодня"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButton))
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
-        // временная кнопка обновления
+        // FIXME: временная кнопка обновления
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadObj))
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
     }
@@ -151,17 +151,18 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath)
-            if let progressCell = cell as? ProgressCollectionViewCell {
-                let habits = HabitsStore.shared.habits
-                if habits.count > 0 {
-                    let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
-                    progressCell.setProgress(percent: percent)
-                } else {
-                    progressCell.setProgress(percent: nil)
-                }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath) as? ProgressCollectionViewCell
+            let habits = HabitsStore.shared.habits
+            if habits.count > 0 {
+                let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
+                cell!.setProgress(percent: percent)
+//                    habitsCollectionView.reloadSections([0])
+//                    habitsCollectionView.reloadData()
+            } else {
+                cell!.setProgress(percent: nil)
             }
-                return cell
+            return cell!
+
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath)
             if let cell = cell as? HabitsCollectionViewCell {
@@ -178,6 +179,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
         if indexPath.section > 0 {
             let habit = HabitsStore.shared.habits[indexPath.item]
             let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item, habitTitle: habit.name, habitColor: habit.color)
+//            habitDetailsViewController.delegate = self
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
         }
     }
@@ -198,12 +200,19 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
 
 extension HabitsViewController: HabitViewControllerDelegate {
 
-    func didAddNewHabbit() {
+    func didAddNewHabit() {
         self.habitsCollectionView.performBatchUpdates {
             let habitsCount = HabitsStore.shared.habits.count - 1
             self.habitsCollectionView.insertItems(at: [IndexPath(item: habitsCount, section: 1)])
         }
     }
 
+    // Не используется
+    func didDeleteHabit(index: Int) {
+        self.habitsCollectionView.performBatchUpdates {
+            self.habitsCollectionView.deleteItems(at: [IndexPath(item: index, section: 1)])
+        }
+    }
+    
 }
 

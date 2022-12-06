@@ -8,12 +8,19 @@
 import UIKit
 
 protocol HabitViewControllerDelegate: AnyObject {
-    func didAddNewHabbit()
+    func didAddNewHabit()
+    func didDeleteHabit(index: Int) // Не  уверен что её нужно прикручивать сюда
+}
+
+// Второй делегат, отвечающий за закрытие следующего экрана
+protocol CloseDetailViewControllerDelegate: AnyObject {
+    func popToRootVC()
 }
 
 class HabitViewController: UIViewController {
 
     weak var delegate: HabitViewControllerDelegate?
+    weak var delegateClose: CloseDetailViewControllerDelegate?
 
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -207,7 +214,10 @@ class HabitViewController: UIViewController {
     private func alertAction() {
         let okAction = UIAlertAction(title: "Отмена", style: .default)
         let cancelAction = UIAlertAction(title: "Удалить", style: .destructive) {_ in
-            self.dismiss(animated: true)
+            self.dismiss(animated: true){
+//                self.delegate?.didDeleteHabit(index: self.index!)
+                self.delegateClose?.popToRootVC()
+            }
             HabitsStore.shared.habits.remove(at: self.index!)
         }
         alertController.addAction(okAction)
@@ -241,17 +251,14 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func closeHabit() {
-//        self.navigationController?.popToRootViewController(animated: true)
-        self.dismiss(animated: true) {
-//            self.navigationController?.popToRootViewController(animated: false)
-        }
+        self.dismiss(animated: true)
     }
 
     @objc private func saveHabit() {
         guard nameTextField.text != "" else { return }
         createHabit()
         self.dismiss(animated: true) {
-            self.delegate?.didAddNewHabbit()
+            self.delegate?.didAddNewHabit()
         }
     }
 
