@@ -35,7 +35,6 @@ class HabitsViewController: UIViewController {
 
     // MARK: - Life cicle
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
@@ -142,7 +141,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
                                                                         habitTitle: habit.name,
                                                                         habitColor: habit.color,
                                                                         trackDates: habit.trackDates)
-//            habitDetailsViewController.delegate = self
+            habitDetailsViewController.delegateDelete = self
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
         }
     }
@@ -160,6 +159,8 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: - My delegates
+
 extension HabitsViewController: HabitViewControllerDelegate {
 
     func didAddNewHabit() {
@@ -168,8 +169,10 @@ extension HabitsViewController: HabitViewControllerDelegate {
             self.habitsCollectionView.insertItems(at: [IndexPath(item: habitsCount, section: 1)])
         }
     }
+}
 
-    // Не используется
+extension HabitsViewController: HabitDetailsViewControllerDelegate {
+
     func didDeleteHabit(index: Int) {
         self.habitsCollectionView.performBatchUpdates {
             self.habitsCollectionView.deleteItems(at: [IndexPath(item: index, section: 1)])

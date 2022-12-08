@@ -7,9 +7,13 @@
 
 import UIKit
 
+protocol HabitDetailsViewControllerDelegate: AnyObject {
+    func didDeleteHabit(index: Int)
+}
+
 class HabitDetailsViewController: UIViewController {
 
-    weak var delegate: CloseDetailViewControllerDelegate?
+    weak var delegateDelete: HabitDetailsViewControllerDelegate?
     
     // MARK: - UI elements
 
@@ -116,8 +120,11 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
 
 }
 
+//MARK: - My delegates
+
 extension HabitDetailsViewController: CloseDetailViewControllerDelegate {
     func popToRootVC() {
         navigationController?.popToRootViewController(animated: true)
+        self.delegateDelete?.didDeleteHabit(index: index)
     }
 }

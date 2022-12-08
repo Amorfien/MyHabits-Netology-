@@ -9,7 +9,7 @@ import UIKit
 
 protocol HabitViewControllerDelegate: AnyObject {
     func didAddNewHabit()
-    func didDeleteHabit(index: Int) // Не  уверен что её нужно прикручивать сюда
+//    func didDeleteHabit(index: Int) // Не  уверен что её нужно прикручивать сюда
 }
 
 // Второй делегат, отвечающий за закрытие следующего экрана
