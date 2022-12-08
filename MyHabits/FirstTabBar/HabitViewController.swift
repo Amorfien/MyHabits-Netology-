@@ -22,6 +22,8 @@ class HabitViewController: UIViewController {
     weak var delegate: HabitViewControllerDelegate?
     weak var delegateClose: CloseDetailViewControllerDelegate?
 
+    // MARK: - UI elements
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "НАЗВАНИЕ"
@@ -49,17 +51,19 @@ class HabitViewController: UIViewController {
         return label
     }()
 
-    private var colorButton: UIButton = {
+    private lazy var colorButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .black
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
+        button.addTarget(self, action: #selector(tapOnColor), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     private lazy var colorPicker: UIColorPickerViewController = {
         let cPicker = UIColorPickerViewController()
+        cPicker.selectedColor = color
         cPicker.delegate = self
         return cPicker
     }()
@@ -93,16 +97,18 @@ class HabitViewController: UIViewController {
         let picker = UIDatePicker()
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
+        picker.addTarget(self, action: #selector(getTimeFromPicker), for: .valueChanged)
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
 
-    private let deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.setTitle("Удалить привычку", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         button.titleLabel?.textAlignment = .center
+        button.addTarget(self, action: #selector(tapOnAlert), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -128,21 +134,23 @@ class HabitViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Life cicle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
 
         setupNavigation()
         setupUI()
-        addTarget()
         setupGestures()
         alertAction()
 
         getTimeFromPicker()
 
         habitOption()
-
     }
+
+    // MARK: - Private methods
 
     @objc private func getTimeFromPicker() {
 
@@ -224,13 +232,6 @@ class HabitViewController: UIViewController {
         alertController.addAction(cancelAction)
     }
 
-    private func addTarget() {
-        deleteButton.addTarget(self, action: #selector(tapOnAlert), for: .touchUpInside)
-        colorButton.addTarget(self, action: #selector(tapOnColor), for: .touchUpInside)
-        pickerView.addTarget(self, action: #selector(getTimeFromPicker), for: .valueChanged)
-
-    }
-
     private func setupGestures() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
         view.addGestureRecognizer(tapGesture)
@@ -294,20 +295,18 @@ class HabitViewController: UIViewController {
 
 }
 
-extension HabitViewController: UIColorPickerViewControllerDelegate {
+// MARK: - Extensions
 
+extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         colorButton.backgroundColor = color
         nameTextField.textColor = color
     }
-
 }
 
 extension HabitViewController: UITextFieldDelegate {
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         keyboardHide()
         return true
     }
-
 }

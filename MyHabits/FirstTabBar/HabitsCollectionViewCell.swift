@@ -9,7 +9,7 @@ import UIKit
 
 class HabitsCollectionViewCell: UICollectionViewCell {
 
-    lazy var todoLabel: UILabel = {
+    private lazy var todoLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.numberOfLines = 2
@@ -19,7 +19,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    let timeLabel: UILabel = {
+    private let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "Каждый день в 7:30"
         label.textColor = .systemGray2
@@ -37,21 +37,27 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private var checkButton: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
         button.tintColor = .orange
+        button.addTarget(self, action: #selector(pressCheck), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     private var buttonPressed: Bool = false
     private var counter: Int = 0
+    private var indx: Int = 0
+
+    struct ViewModel {
+        let habit: Habit
+        var isSelected: Bool
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        addTarget()
     }
 
     required init?(coder: NSCoder) {
@@ -66,6 +72,8 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 //        case true: checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
 //        }
     }
+
+    // MARK: - Private methods
 
     private func setupView() {
         backgroundColor = .white
@@ -95,11 +103,10 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         ])
     }
 
-
-    private func addTarget() {
-        checkButton.addTarget(self, action: #selector(pressCheck), for: .touchUpInside)
-    }
     @objc private func pressCheck() {
+//        let habit = HabitsStore.shared.habits[indx]
+//        HabitsStore.track(habit)
+
         let name = buttonPressed ? "circle" : "checkmark.circle.fill"
         checkButton.setBackgroundImage(UIImage(systemName: name), for: .normal)
 
@@ -111,12 +118,20 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         buttonPressed.toggle()
     }
 
+    private func setupCheckBtn(with model: ViewModel) {
+        
+        let image = model.isSelected ? "circle" : "checkmark.circle.fill"
+        checkButton.setBackgroundImage(UIImage(systemName: image), for: .normal)
+//        model.habit.isAlreadyTakenToday
+    }
+
 //    MARK: - Публичный метод настройки ячейки
-    func setCell(name: String, color: UIColor, dateString: String) {
+    func setCell(name: String, color: UIColor, dateString: String, checkToday: Bool) {
         self.todoLabel.text = name
         self.checkButton.tintColor = color
         self.todoLabel.textColor = color
         self.timeLabel.text = dateString
+        self.buttonPressed = checkToday
     }
 
 }

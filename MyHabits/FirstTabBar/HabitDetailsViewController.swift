@@ -10,6 +10,8 @@ import UIKit
 class HabitDetailsViewController: UIViewController {
 
     weak var delegate: CloseDetailViewControllerDelegate?
+    
+    // MARK: - UI elements
 
     private lazy var detailTableView: UITableView = {
         let tableView = UITableView()
@@ -19,10 +21,14 @@ class HabitDetailsViewController: UIViewController {
         return tableView
     }()
 
+    // MARK: - Properties
 //            заполняются данными из ячейки HabitsCollectionViewCell
     private var index = 0
     private var habitTitle = ""
     private var habitColor = UIColor.black
+    private var trackDates: [Date] = []
+
+    // MARK: - Life cicle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,16 +38,19 @@ class HabitDetailsViewController: UIViewController {
         setupView()
     }
 
-    init(index: Int, habitTitle: String, habitColor: UIColor) {
+    init(index: Int, habitTitle: String, habitColor: UIColor, trackDates: [Date]) {
         super.init(nibName: nil, bundle: nil)
         self.index = index
         self.habitTitle = habitTitle
         self.habitColor = habitColor
+        self.trackDates = trackDates
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private methods
 
     private func setupNavigation() {
         navigationController?.isToolbarHidden = false
@@ -74,9 +83,11 @@ class HabitDetailsViewController: UIViewController {
 
 }
 
+// MARK: - Extensions
+
 extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return HabitsStore.shared.dates.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,7 +96,18 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
         cell.accessoryType = .checkmark
         cell.selectionStyle = .none
         cell.tintColor = #colorLiteral(red: 0.6902361512, green: 0, blue: 0.8297754526, alpha: 1)
-        cell.textLabel?.text = "\(indexPath[1] + 1)"
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM YYYY"
+        let reverseDates = HabitsStore.shared.dates.sorted(by: > )
+
+        switch indexPath.row {
+        case 0: cell.textLabel?.text = "Сегодня"
+        case 1: cell.textLabel?.text = "Вчера"
+        case 2: cell.textLabel?.text = "Позавчера"
+        default: cell.textLabel?.text = formatter.string(from: reverseDates[indexPath.row])
+        }
+
         return cell
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

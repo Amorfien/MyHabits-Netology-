@@ -9,6 +9,8 @@ import UIKit
 
 class HabitsViewController: UIViewController {
 
+    // MARK: - UI elements
+
     private var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -30,50 +32,8 @@ class HabitsViewController: UIViewController {
     }()
 
     static var countOfChecks: Int = 0
-/*
-//  MARK: - Проверка срабатывания этапов жизненного цикла
 
-    // Загрузка вью
-    override func loadView() {
-        super.loadView()
-        print(#function)
-    }
-
-    // срабатывает каждый раз после загрузки вью
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-//        self.habitsCollectionView.reloadData()
-        print(#function)
-    }
-    // срабатывает перед тем как контроллер закроется
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print(#function)
-    }
-
-    // срабатывает после того как контроллер закроется
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print(#function)
-    }
-
-    // срабатывает при развороте экрана
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        print(#function)
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print(#function)
-    }
-
-    // при удалении контроллера из памяти
-    deinit {
-        print(#function)
-    }
-*/
-//  MARK: -
+    // MARK: - Life cicle
 
 
     override func viewDidLoad() {
@@ -82,8 +42,6 @@ class HabitsViewController: UIViewController {
         setupNavigation()
         setupUI()
 
-//        print(#function)
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -91,6 +49,8 @@ class HabitsViewController: UIViewController {
 //        self.habitsCollectionView.reloadData()
 //        print(#function)
     }
+
+    // MARK: - Private methods
 
     private func setupNavigation() {
         navigationItem.title = "Сегодня"
@@ -129,6 +89,8 @@ class HabitsViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+
 extension UIViewController {
     func presentOnRoot(with viewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: viewController)
@@ -139,10 +101,7 @@ extension UIViewController {
 
 extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return 1
-        default: return HabitsStore.shared.habits.count
-        }
+        return (section == 0) ? 1 : HabitsStore.shared.habits.count
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -169,7 +128,8 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
                 let habit = HabitsStore.shared.habits[indexPath.item]
                 cell.setCell(name: habit.name,
                              color: habit.color,
-                             dateString: habit.dateString)
+                             dateString: habit.dateString,
+                             checkToday: habit.isAlreadyTakenToday)
             }
             return cell
         }
@@ -178,14 +138,16 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section > 0 {
             let habit = HabitsStore.shared.habits[indexPath.item]
-            let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item, habitTitle: habit.name, habitColor: habit.color)
+            let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item,
+                                                                        habitTitle: habit.name,
+                                                                        habitColor: habit.color,
+                                                                        trackDates: habit.trackDates)
 //            habitDetailsViewController.delegate = self
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
         }
     }
 
 }
-
 
 extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

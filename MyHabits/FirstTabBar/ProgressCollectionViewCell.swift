@@ -9,6 +9,8 @@ import UIKit
 
 class ProgressCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - UI elements
+
     private let gogoLabel: UILabel = {
         let label = UILabel()
         label.text = "Всё получится!"
@@ -47,6 +49,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Private methods
+
     private func setupView() {
         backgroundColor = .white
         layer.cornerRadius = 8
@@ -69,6 +73,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
             progressView.heightAnchor.constraint(equalToConstant: 7)
         ])
     }
+
+    // MARK: - Public methods
 
     func setProgress(percent: Float?) {
 
