@@ -79,12 +79,10 @@ class HabitsViewController: UIViewController {
         presentOnRoot(with: habitViewController)
     }
 
-    func reload() {
-        self.habitsCollectionView.reloadData()
-    }
 //    FIXME: Временная кнопка обновления
     @objc private func reloadObj() {
-        self.habitsCollectionView.reloadData()
+//        self.habitsCollectionView.reloadData()
+        self.habitsCollectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])
     }
 }
 
@@ -124,6 +122,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitsCell", for: indexPath)
             if let cell = cell as? HabitsCollectionViewCell {
+                cell.delegateProgressUpd = self
                 let habit = HabitsStore.shared.habits[indexPath.item]
                 cell.setCell(name: habit.name,
                              color: habit.color,
@@ -160,7 +159,7 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
 }
 
 //MARK: - My delegates
-
+// добавление привычки
 extension HabitsViewController: HabitViewControllerDelegate {
 
     func didAddNewHabit() {
@@ -171,6 +170,7 @@ extension HabitsViewController: HabitViewControllerDelegate {
     }
 }
 
+// удаление привычки
 extension HabitsViewController: HabitDetailsViewControllerDelegate {
 
     func didDeleteHabit(index: Int) {
@@ -179,5 +179,14 @@ extension HabitsViewController: HabitDetailsViewControllerDelegate {
         }
     }
     
+}
+
+// обновление прогресса
+extension HabitsViewController: HVCProgressUpd {
+
+    func reloadProgressBar() {
+        self.habitsCollectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])
+    }
+
 }
 

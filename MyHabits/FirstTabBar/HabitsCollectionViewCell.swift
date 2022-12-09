@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol HVCProgressUpd: AnyObject {
+    func reloadProgressBar()
+}
+
 class HabitsCollectionViewCell: UICollectionViewCell {
+
+    weak var delegateProgressUpd: HVCProgressUpd?
 
     private lazy var todoLabel: UILabel = {
         let label = UILabel()
@@ -116,6 +122,8 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         countLabel.text = "Счётчик: \(counter)"
 
         buttonPressed.toggle()
+
+        self.delegateProgressUpd?.reloadProgressBar()
     }
 
     private func setupCheckBtn(with model: ViewModel) {
