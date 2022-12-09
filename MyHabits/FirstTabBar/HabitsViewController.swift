@@ -166,6 +166,7 @@ extension HabitsViewController: HabitViewControllerDelegate {
         self.habitsCollectionView.performBatchUpdates {
             let habitsCount = HabitsStore.shared.habits.count - 1
             self.habitsCollectionView.insertItems(at: [IndexPath(item: habitsCount, section: 1)])
+            reloadProgressBar()
         }
     }
 }
@@ -176,6 +177,7 @@ extension HabitsViewController: HabitDetailsViewControllerDelegate {
     func didDeleteHabit(index: Int) {
         self.habitsCollectionView.performBatchUpdates {
             self.habitsCollectionView.deleteItems(at: [IndexPath(item: index, section: 1)])
+            reloadProgressBar()
         }
     }
     
