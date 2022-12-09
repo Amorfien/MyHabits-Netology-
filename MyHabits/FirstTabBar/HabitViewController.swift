@@ -97,6 +97,7 @@ class HabitViewController: UIViewController {
         let picker = UIDatePicker()
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
+        picker.date = date ?? Date()
         picker.addTarget(self, action: #selector(getTimeFromPicker), for: .valueChanged)
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
@@ -113,20 +114,24 @@ class HabitViewController: UIViewController {
         return button
     }()
 
-    private lazy var alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку?", preferredStyle: .alert)
+    private lazy var alertController = UIAlertController(title: "Удалить привычку",
+                                                         message: "Вы хотите удалить привычку?",
+                                                         preferredStyle: .alert)
 
     private var index: Int?
     private var name: String?
     private var color: UIColor
     private var deleteIsHiden: Bool
     private var isTyping: Bool
+    private var date: Date?
 
-    public init(index: Int?, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool) {
+    public init(index: Int?, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool, date: Date?) {
         self.index = index
         self.name = name
         self.color = color
         self.deleteIsHiden = deleteIsHiden
         self.isTyping = isTyping
+        self.date = date
         super.init(nibName: nil, bundle: nil)
     }
 

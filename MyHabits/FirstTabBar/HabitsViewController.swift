@@ -45,8 +45,6 @@ class HabitsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-//        self.habitsCollectionView.reloadData()
-//        print(#function)
     }
 
     // MARK: - Private methods
@@ -55,9 +53,6 @@ class HabitsViewController: UIViewController {
         navigationItem.title = "Сегодня"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButton))
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
-        // FIXME: временная кнопка обновления
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadObj))
-        navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
     }
 
     private func setupUI() {
@@ -72,18 +67,13 @@ class HabitsViewController: UIViewController {
 
     @objc private func plusButton() {
         let habitViewController = HabitViewController(index: nil, name: nil, color: .black,
-                                                      deleteIsHiden: true, isTyping: true)
+                                                      deleteIsHiden: true, isTyping: true, date: nil)
 
         habitViewController.delegate = self
 
         presentOnRoot(with: habitViewController)
     }
 
-//    FIXME: Временная кнопка обновления
-    @objc private func reloadObj() {
-//        self.habitsCollectionView.reloadData()
-        self.habitsCollectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])
-    }
 }
 
 // MARK: - Extensions
@@ -112,8 +102,6 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             if habits.count > 0 {
                 let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
                 cell!.setProgress(percent: percent)
-//                    habitsCollectionView.reloadSections([0])
-//                    habitsCollectionView.reloadData()
             } else {
                 cell!.setProgress(percent: nil)
             }
@@ -139,6 +127,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item,
                                                                         habitTitle: habit.name,
                                                                         habitColor: habit.color,
+                                                                        habitDate: habit.date,
                                                                         trackDates: habit.trackDates)
             habitDetailsViewController.delegateDelete = self
             navigationController?.pushViewController(habitDetailsViewController, animated: false)

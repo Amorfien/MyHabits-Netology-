@@ -30,6 +30,7 @@ class HabitDetailsViewController: UIViewController {
     private var index = 0
     private var habitTitle = ""
     private var habitColor = UIColor.black
+    private var habitDate = Date()
     private var trackDates: [Date] = []
 
     // MARK: - Life cicle
@@ -40,13 +41,16 @@ class HabitDetailsViewController: UIViewController {
 
         setupNavigation()
         setupView()
+
+        print(habitDate)
     }
 
-    init(index: Int, habitTitle: String, habitColor: UIColor, trackDates: [Date]) {
+    init(index: Int, habitTitle: String, habitColor: UIColor, habitDate: Date, trackDates: [Date]) {
         super.init(nibName: nil, bundle: nil)
         self.index = index
         self.habitTitle = habitTitle
         self.habitColor = habitColor
+        self.habitDate = habitDate
         self.trackDates = trackDates
     }
 
@@ -80,7 +84,7 @@ class HabitDetailsViewController: UIViewController {
 
     @objc private func editHabit() {
         let habitViewController = HabitViewController(index: index, name: habitTitle, color: habitColor,
-                                                      deleteIsHiden: false, isTyping: false)
+                                                      deleteIsHiden: false, isTyping: false, date: habitDate)
         habitViewController.delegateClose = self
         navigationController?.presentOnRoot(with: habitViewController)
     }
