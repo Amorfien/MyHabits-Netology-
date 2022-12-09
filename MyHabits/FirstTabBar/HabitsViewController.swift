@@ -130,6 +130,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
                                                                         habitDate: habit.date,
                                                                         trackDates: habit.trackDates)
             habitDetailsViewController.delegateDelete = self
+            habitDetailsViewController.delegateUpdate = self
             navigationController?.pushViewController(habitDetailsViewController, animated: false)
         }
     }
@@ -181,3 +182,11 @@ extension HabitsViewController: HVCProgressUpd {
 
 }
 
+// обновление одной ячейки после редактирования привычки
+extension HabitsViewController: DetailVCUpdateDelegate {
+
+    func updateCell(updIndex: Int) {
+        self.habitsCollectionView.reloadItems(at: [IndexPath(item: updIndex, section: 1)])
+    }
+
+}

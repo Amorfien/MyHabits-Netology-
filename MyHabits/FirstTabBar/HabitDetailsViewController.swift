@@ -11,9 +11,14 @@ protocol HabitDetailsViewControllerDelegate: AnyObject {
     func didDeleteHabit(index: Int)
 }
 
+protocol DetailVCUpdateDelegate: AnyObject {
+    func updateCell(updIndex: Int)
+}
+
 class HabitDetailsViewController: UIViewController {
 
     weak var delegateDelete: HabitDetailsViewControllerDelegate?
+    weak var delegateUpdate: DetailVCUpdateDelegate?
     
     // MARK: - UI elements
 
@@ -42,7 +47,11 @@ class HabitDetailsViewController: UIViewController {
         setupNavigation()
         setupView()
 
-        print(habitDate)
+    }
+
+    // скорее всего это дикая ошибка. Вызов делегата нужно было засунуть в dismiss по аналогии с удалением. Или нужно достучаться до нативной кнопки "назад" и добавить ей селектор
+    deinit {
+        self.delegateUpdate?.updateCell(updIndex: index)
     }
 
     init(index: Int, habitTitle: String, habitColor: UIColor, habitDate: Date, trackDates: [Date]) {
