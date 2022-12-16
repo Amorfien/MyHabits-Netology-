@@ -65,7 +65,9 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        checkBtnDraw()
+        setupWithHabit(with: thisHabit)
+//        checkBtnDraw()
+//        countLabel.text = "Счётчик: \(thisHabit.trackDates.count)"
     }
 
     // MARK: - Private methods
@@ -122,6 +124,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         self.checkButton.tintColor = habit.color
         self.todoLabel.textColor = habit.color
         self.timeLabel.text = habit.dateString
+        self.countLabel.text = "Счётчик: \(thisHabit.trackDates.count)"
         checkBtnDraw()
     }
 

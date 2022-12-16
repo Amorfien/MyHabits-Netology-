@@ -144,8 +144,8 @@ extension HabitsViewController: HabitViewControllerDelegate {
 
     func didAddNewHabit() {
         self.habitsCollectionView.performBatchUpdates {
-            let habitsCount = HabitsStore.shared.habits.count - 1
-            self.habitsCollectionView.insertItems(at: [IndexPath(item: habitsCount, section: 1)])
+//            let habitsCount = HabitsStore.shared.habits.count - 1
+            self.habitsCollectionView.insertItems(at: [IndexPath(item: 0, section: 1)])
             reloadProgressBar()
         }
     }
