@@ -26,6 +26,10 @@ class TabBarController: UITabBarController {
         UITabBar.appearance().tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         UITabBar.appearance().backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         UITabBar.appearance().clipsToBounds = true
+        tabBar.layer.borderWidth = 0.3
+        tabBar.layer.borderColor = UIColor.systemGray.cgColor
+        tabBar.layer.masksToBounds = true
+
     }
 
 }
