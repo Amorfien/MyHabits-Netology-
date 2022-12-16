@@ -31,7 +31,7 @@ class HabitsViewController: UIViewController {
         return collectionView
     }()
 
-    static var countOfChecks: Int = 0
+//    static var countOfChecks: Int = 0
 
     // MARK: - Life cicle
 
@@ -66,8 +66,7 @@ class HabitsViewController: UIViewController {
     }
 
     @objc private func plusButton() {
-        let habitViewController = HabitViewController(index: nil, name: nil, color: .black,
-                                                      deleteIsHiden: true, isTyping: true, date: nil)
+        let habitViewController = HabitViewController(habit: nil, index: nil)
 
         habitViewController.delegate = self
 
@@ -100,7 +99,8 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProgressCell", for: indexPath) as? ProgressCollectionViewCell
             let habits = HabitsStore.shared.habits
             if habits.count > 0 {
-                let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
+//                let percent: Float = Float(HabitsViewController.countOfChecks) / Float(habits.count)
+                let percent = HabitsStore.shared.todayProgress
                 cell!.setProgress(percent: percent)
             } else {
                 cell!.setProgress(percent: nil)
@@ -112,10 +112,14 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             if let cell = cell as? HabitsCollectionViewCell {
                 cell.delegateProgressUpd = self
                 let habit = HabitsStore.shared.habits[indexPath.item]
-                cell.setCell(name: habit.name,
-                             color: habit.color,
-                             dateString: habit.dateString,
-                             checkToday: habit.isAlreadyTakenToday)
+                cell.setupWithHabit(with: habit)
+                
+//               let model = Model(iD: indexPath.item, habit: HabitsStore.shared.habits[indexPath.item])
+//                cell.setupWithModel(with: model)
+//                cell.setCell(name: habit.name,
+//                             color: habit.color,
+//                             dateString: habit.dateString,
+//                             checkToday: habit.isAlreadyTakenToday)
             }
             return cell
         }
@@ -124,11 +128,13 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section > 0 {
             let habit = HabitsStore.shared.habits[indexPath.item]
-            let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item,
-                                                                        habitTitle: habit.name,
-                                                                        habitColor: habit.color,
-                                                                        habitDate: habit.date,
-                                                                        trackDates: habit.trackDates)
+            let habitDetailsViewController = HabitDetailsViewController()
+//            let habitDetailsViewController = HabitDetailsViewController(index: indexPath.item,
+//                                                                        habitTitle: habit.name,
+//                                                                        habitColor: habit.color,
+//                                                                        habitDate: habit.date,
+//                                                                        trackDates: habit.trackDates)
+            habitDetailsViewController.getHabit(habit: habit, index: indexPath.item)
             habitDetailsViewController.delegateDelete = self
             habitDetailsViewController.delegateUpdate = self
             navigationController?.pushViewController(habitDetailsViewController, animated: false)

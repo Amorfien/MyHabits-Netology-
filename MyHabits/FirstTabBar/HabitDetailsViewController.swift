@@ -25,6 +25,7 @@ class HabitDetailsViewController: UIViewController {
     private lazy var detailTableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -33,10 +34,12 @@ class HabitDetailsViewController: UIViewController {
     // MARK: - Properties
 //            заполняются данными из ячейки HabitsCollectionViewCell
     private var index = 0
-    private var habitTitle = ""
-    private var habitColor = UIColor.black
-    private var habitDate = Date()
-    private var trackDates: [Date] = []
+//    private var habitTitle = ""
+//    private var habitColor = UIColor.black
+//    private var habitDate = Date()
+//    private var trackDates: [Date] = []
+
+    private var thisHabit = Habit(name: "", date: Date(), color: .red)
 
     // MARK: - Life cicle
 
@@ -47,6 +50,14 @@ class HabitDetailsViewController: UIViewController {
         setupNavigation()
         setupView()
 
+//        let habits = HabitsStore.shared.habits
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd.MM.yy"
+////        print(formatter.string(from: Date()))
+//
+//        var thisHabitTrackDates = HabitsStore.shared.habits[index].trackDates
+//        print(thisHabitTrackDates)
+
     }
 
     // скорее всего это дикая ошибка. Вызов делегата нужно было засунуть в dismiss по аналогии с удалением. Или нужно достучаться до нативной кнопки "назад" и добавить ей селектор
@@ -54,13 +65,17 @@ class HabitDetailsViewController: UIViewController {
         self.delegateUpdate?.updateCell(updIndex: index)
     }
 
-    init(index: Int, habitTitle: String, habitColor: UIColor, habitDate: Date, trackDates: [Date]) {
-        super.init(nibName: nil, bundle: nil)
-        self.index = index
-        self.habitTitle = habitTitle
-        self.habitColor = habitColor
-        self.habitDate = habitDate
-        self.trackDates = trackDates
+//    init(index: Int, habitTitle: String, habitColor: UIColor, habitDate: Date, trackDates: [Date]) {
+//        super.init(nibName: nil, bundle: nil)
+//        self.index = index
+//        self.habitTitle = habitTitle
+//        self.habitColor = habitColor
+//        self.habitDate = habitDate
+//        self.trackDates = trackDates
+//    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
     required init?(coder: NSCoder) {
@@ -71,7 +86,7 @@ class HabitDetailsViewController: UIViewController {
 
     private func setupNavigation() {
         navigationController?.isToolbarHidden = false
-        navigationItem.title = habitTitle
+        navigationItem.title = thisHabit.name
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.6906365752, green: 0, blue: 0.8297687173, alpha: 1)
         let editButton = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editHabit))
@@ -92,10 +107,20 @@ class HabitDetailsViewController: UIViewController {
     }
 
     @objc private func editHabit() {
-        let habitViewController = HabitViewController(index: index, name: habitTitle, color: habitColor,
-                                                      deleteIsHiden: false, isTyping: false, date: habitDate)
+//        let habitViewController = HabitViewController(index: index, name: habitTitle, color: habitColor,
+//                                                      deleteIsHiden: false, isTyping: false, date: habitDate)
+        let habitViewController = HabitViewController(habit: thisHabit, index: index)
         habitViewController.delegateClose = self
         navigationController?.presentOnRoot(with: habitViewController)
+    }
+
+
+    // MARK: - public methods
+
+    public func getHabit(habit: Habit, index: Int) {
+//        self.thisHabit = habit
+        self.thisHabit = HabitsStore.shared.habits[index]
+        self.index = index
     }
 
 }
@@ -110,13 +135,15 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = .white
-        cell.accessoryType = .checkmark
+        let reverseDates = HabitsStore.shared.dates.sorted(by: > )
+        cell.accessoryType = HabitsStore.shared.habit(thisHabit, isTrackedIn: reverseDates[indexPath.row]) ? .checkmark : .none
+
         cell.selectionStyle = .none
         cell.tintColor = #colorLiteral(red: 0.6902361512, green: 0, blue: 0.8297754526, alpha: 1)
 
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMMM YYYY"
-        let reverseDates = HabitsStore.shared.dates.sorted(by: > )
+        formatter.locale = .init(identifier: "ru_RU")
 
         switch indexPath.row {
         case 0: cell.textLabel?.text = "Сегодня"

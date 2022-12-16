@@ -125,14 +125,25 @@ class HabitViewController: UIViewController {
     private var isTyping: Bool
     private var date: Date?
 
-    public init(index: Int?, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool, date: Date?) {
+//    public init(index: Int?, name: String?, color: UIColor, deleteIsHiden: Bool, isTyping: Bool, date: Date?) {
+//        self.index = index
+//        self.name = name
+//        self.color = color
+//        self.deleteIsHiden = deleteIsHiden
+//        self.isTyping = isTyping
+//        self.date = date
+//        super.init(nibName: nil, bundle: nil)
+//    }
+
+    init(habit: Habit?, index: Int?) {
         self.index = index
-        self.name = name
-        self.color = color
-        self.deleteIsHiden = deleteIsHiden
-        self.isTyping = isTyping
-        self.date = date
+        self.name = habit?.name// ?? ""
+        self.color = habit?.color ?? .orange
+        self.deleteIsHiden = index == nil ? true : false
+        self.isTyping = index == nil ? true : false
+        self.date = habit?.date
         super.init(nibName: nil, bundle: nil)
+
     }
 
     required init?(coder: NSCoder) {
