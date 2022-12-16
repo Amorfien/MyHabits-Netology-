@@ -33,13 +33,8 @@ class HabitDetailsViewController: UIViewController {
 
     // MARK: - Properties
 //            заполняются данными из ячейки HabitsCollectionViewCell
-    private var index = 0
-//    private var habitTitle = ""
-//    private var habitColor = UIColor.black
-//    private var habitDate = Date()
-//    private var trackDates: [Date] = []
-
-    private var thisHabit = Habit(name: "", date: Date(), color: .red)
+    private var index: Int
+    private lazy var thisHabit = HabitsStore.shared.habits[index]
 
     // MARK: - Life cicle
 
@@ -50,14 +45,6 @@ class HabitDetailsViewController: UIViewController {
         setupNavigation()
         setupView()
 
-//        let habits = HabitsStore.shared.habits
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd.MM.yy"
-////        print(formatter.string(from: Date()))
-//
-//        var thisHabitTrackDates = HabitsStore.shared.habits[index].trackDates
-//        print(thisHabitTrackDates)
-
     }
 
     // скорее всего это дикая ошибка. Вызов делегата нужно было засунуть в dismiss по аналогии с удалением. Или нужно достучаться до нативной кнопки "назад" и добавить ей селектор
@@ -65,17 +52,10 @@ class HabitDetailsViewController: UIViewController {
         self.delegateUpdate?.updateCell(updIndex: index)
     }
 
-//    init(index: Int, habitTitle: String, habitColor: UIColor, habitDate: Date, trackDates: [Date]) {
-//        super.init(nibName: nil, bundle: nil)
-//        self.index = index
-//        self.habitTitle = habitTitle
-//        self.habitColor = habitColor
-//        self.habitDate = habitDate
-//        self.trackDates = trackDates
-//    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    init(index: Int) {
+        self.index = index
+        super.init(nibName: nil, bundle: nil)
+        self.thisHabit = HabitsStore.shared.habits[index]
     }
 
     required init?(coder: NSCoder) {
@@ -107,20 +87,9 @@ class HabitDetailsViewController: UIViewController {
     }
 
     @objc private func editHabit() {
-//        let habitViewController = HabitViewController(index: index, name: habitTitle, color: habitColor,
-//                                                      deleteIsHiden: false, isTyping: false, date: habitDate)
         let habitViewController = HabitViewController(habit: thisHabit, index: index)
         habitViewController.delegateClose = self
         navigationController?.presentOnRoot(with: habitViewController)
-    }
-
-
-    // MARK: - public methods
-
-    public func getHabit(habit: Habit, index: Int) {
-//        self.thisHabit = habit
-        self.thisHabit = HabitsStore.shared.habits[index]
-        self.index = index
     }
 
 }
@@ -135,7 +104,7 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = .white
-        let reverseDates = HabitsStore.shared.dates.sorted(by: > )
+        let reverseDates: [Date] = HabitsStore.shared.dates.reversed()
         cell.accessoryType = HabitsStore.shared.habit(thisHabit, isTrackedIn: reverseDates[indexPath.row]) ? .checkmark : .none
 
         cell.selectionStyle = .none

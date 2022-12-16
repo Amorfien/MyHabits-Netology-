@@ -79,7 +79,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     func setProgress(percent: Float?) {
 
         progressView.setProgress(percent ?? 0.999, animated: true)
-        //percentLabel.text = (percent == nil) ? "Добавьте первую привычку" : "\(Int((percent! * 100).rounded()))%"
         percentLabel.text = (percent == nil) ? "Добавьте первую привычку" : "\(Int(percent! * 100))%"
         gogoLabel.text = (percent == 1) ? "На сегодня всё!": "Всё получится!"
 

@@ -53,9 +53,6 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     }()
 
     private var thisHabit = Habit(name: "111", date: Date(), color: .systemYellow)
-//    private var buttonPressed: Bool = false
-//    private var counter: Int = 0
-//    private var indx: Int = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,11 +66,6 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         checkBtnDraw()
-//        FIXME: решить ошибки переиспользования ячеек
-//        switch buttonPressed {
-//        case false: checkButton.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
-//        case true: checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-//        }
     }
 
     // MARK: - Private methods
@@ -110,15 +102,10 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
         if !thisHabit.isAlreadyTakenToday {
             checkButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-//            thisHabit.trackDates.append(Date())
             HabitsStore.shared.track(thisHabit)
             HabitsStore.shared.save()
             countLabel.text = "Счётчик: \(thisHabit.trackDates.count)"
-            
         }
-
-
-
         self.delegateProgressUpd?.reloadProgressBar()
     }
 
@@ -128,6 +115,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
 
     }
 
+    // MARK: - Публичный метод настройки ячейки
     public func setupWithHabit(with habit: Habit) {
         self.thisHabit = habit
         self.todoLabel.text = habit.name
@@ -136,28 +124,5 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         self.timeLabel.text = habit.dateString
         checkBtnDraw()
     }
-
-//    func setupWithModel(with model: Model) {
-//
-//        self.todoLabel.text = model.habit.name
-//        self.checkButton.tintColor = model.habit.color
-//        self.todoLabel.textColor = model.habit.color
-//        self.timeLabel.text = model.habit.dateString
-//        self.indx = model.iD
-//
-////        let image = model.isSelected ? "checkmark.circle.fill" : "circle"
-//        let image = habit.isAlreadyTakenToday ? "checkmark.circle.fill" : "circle"
-//        checkButton.setBackgroundImage(UIImage(systemName: image), for: .normal)
-//        habit = model.habit
-//    }
-
-//    MARK: - Публичный метод настройки ячейки
-//    func setCell(name: String, color: UIColor, dateString: String, checkToday: Bool) {
-//        self.todoLabel.text = name
-//        self.checkButton.tintColor = color
-//        self.todoLabel.textColor = color
-//        self.timeLabel.text = dateString
-//        self.buttonPressed = checkToday
-//    }
 
 }
